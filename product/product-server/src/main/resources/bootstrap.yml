@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: product
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        #file-extension: yml 不起作用
+        file-extension: yaml
+        server-addr: 127.0.0.1:8848
+        #name: product-dev.yml
+      discovery:
+        server-addr: 127.0.0.1:8848
+
+server:
+  port: 8085
+
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug
+
