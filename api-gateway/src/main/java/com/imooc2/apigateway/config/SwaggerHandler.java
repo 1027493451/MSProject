@@ -1,4 +1,4 @@
-package com.imooc2.apigateway.controller;
+package com.imooc2.apigateway.config;
 
 import springfox.documentation.swagger.web.SecurityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 import springfox.documentation.swagger.web.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -65,7 +66,7 @@ public class SwaggerHandler {
 //    private MySwaggerResourceProvider swaggerResourceProvider;
 //
 //    @Autowired
-//    public SwaggerResourceController(MySwaggerResourceProvider swaggerResourceProvider) {
+//    public SwaggerHandler(MySwaggerResourceProvider swaggerResourceProvider) {
 //        this.swaggerResourceProvider = swaggerResourceProvider;
 //    }
 //

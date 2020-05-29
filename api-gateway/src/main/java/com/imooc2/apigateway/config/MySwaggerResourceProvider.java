@@ -1,6 +1,8 @@
 package com.imooc2.apigateway.config;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.support.NameUtils;
@@ -10,7 +12,9 @@ import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @Author snail
@@ -53,7 +57,7 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
     }
 
 
-
+//
 //        /**
 //         * swagger2默认的url后缀
 //         */
