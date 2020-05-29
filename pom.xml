@@ -28,6 +28,8 @@
         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
         <spring-cloud-starter-hystrix-dashboard.version>1.4.7.RELEASE</spring-cloud-starter-hystrix-dashboard.version>
         <spring-cloud-starter-hystrix.version>1.4.7.RELEASE</spring-cloud-starter-hystrix.version>
+        <api2doc.version>1.0.2</api2doc.version>
+        <swagger2.version>2.9.2</swagger2.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +65,25 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <!--公共类-->
+    <dependencies>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger2.version}</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.github.terran4j</groupId>-->
+        <!--            <artifactId>terran4j-commons-api2doc</artifactId>-->
+        <!--            <version>${api2doc.version}</version>-->
+        <!--        </dependency>-->
+    </dependencies>
 
 
 </project>

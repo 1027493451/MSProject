@@ -7,5 +7,5 @@ package com.imooc2.user.RedisConstant;
  * @Version 1.0
  **/
 public interface RedisConstant {
-    String TOKEN_TRMPLATE="token_%s";
+    String TOKEN_TRMPLATE = "token_%s";
 }

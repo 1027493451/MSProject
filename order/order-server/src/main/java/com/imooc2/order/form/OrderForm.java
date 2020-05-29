@@ -1,7 +1,9 @@
 package com.imooc2.order.form;
 
 import lombok.Data;
+
 import javax.validation.constraints.NotEmpty;
+
 /**
  * Created by 廖师兄
  * 2017-12-10 17:21

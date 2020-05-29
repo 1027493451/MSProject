@@ -20,8 +20,7 @@ public class RestTemplateUtil {
      * @param charset
      * @return
      */
-    public static RestTemplate getInstance(String charset)
-    {
+    public static RestTemplate getInstance(String charset) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName(charset)));
         return restTemplate;

@@ -50,6 +50,7 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
 
     /**
      * 过滤器
+     *
      * @param exchange
      * @param chain
      * @return
@@ -59,17 +60,19 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
         String url = exchange.getRequest().getURI().getPath();
 
         //跳过不需要验证的路径
-        if(null != skipAuthUrls&& Arrays.asList(skipAuthUrls).contains(url)){
+        if (null != skipAuthUrls && Arrays.asList(skipAuthUrls).contains(url)) {
             return chain.filter(exchange);
         }
 
         //获取token
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
         ServerHttpResponse resp = exchange.getResponse();
-        if(StringUtils.isBlank(token)){
+        if (StringUtils.isBlank(token)) {
+            //TODO 测试swagger2 先放心不用检测token
+            return chain.filter(exchange);
             //没有token
-            return authErro(resp,"请登陆");
-        }else{
+            //return authErro(resp, "请登陆");
+        } else {
             //有token
             try {
 //                if(token.equals("123")){
@@ -81,35 +84,36 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
                 //return chain.filter(exchange);
                 //jwtUtil.checkToken(token,objectMapper);
                 //return chain.filter(exchange);
-            }catch (ExpiredJwtException e){
-                log.error(e.getMessage(),e);
-                if(e.getMessage().contains("Allowed clock skew")){
-                    return authErro(resp,"认证过期");
-                }else{
-                    return authErro(resp,"认证失败");
+            } catch (ExpiredJwtException e) {
+                log.error(e.getMessage(), e);
+                if (e.getMessage().contains("Allowed clock skew")) {
+                    return authErro(resp, "认证过期");
+                } else {
+                    return authErro(resp, "认证失败");
                 }
-            }catch (Exception e) {
-                log.error(e.getMessage(),e);
-                return authErro(resp,"认证失败");
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                return authErro(resp, "认证失败");
             }
         }
     }
 
     /**
      * 认证错误输出
+     *
      * @param resp 响应对象
      * @param mess 错误信息
      * @return
      */
     private Mono<Void> authErro(ServerHttpResponse resp, String mess) {
         resp.setStatusCode(HttpStatus.UNAUTHORIZED);
-        resp.getHeaders().add("Content-Type","application/json;charset=UTF-8");
+        resp.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
         ResultVO<String> returnData = new ResultVO<>(HttpStatus.UNAUTHORIZED.value(), mess, mess);
         String returnStr = "";
         try {
             returnStr = objectMapper.writeValueAsString(returnData);
         } catch (JsonProcessingException e) {
-            log.error(e.getMessage(),e);
+            log.error(e.getMessage(), e);
         }
         DataBuffer buffer = resp.bufferFactory().wrap(returnStr.getBytes(StandardCharsets.UTF_8));
         return resp.writeWith(Flux.just(buffer));

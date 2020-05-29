@@ -25,6 +25,9 @@ public interface ProductClient {
     @GetMapping("/msg")
     String productMsg();
 
+    /**
+     * 注意fegin对象前要申明@RequestBody，基本类型要申明是@requestParm
+     **/
     @PostMapping("/product/listForOrder")
     public List<ProductInfoOutput> listForOrder(@RequestBody List<String> productIdList);
 

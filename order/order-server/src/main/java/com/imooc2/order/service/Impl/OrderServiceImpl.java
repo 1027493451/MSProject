@@ -43,28 +43,27 @@ public class OrderServiceImpl implements OrderService {
     private OrderMasterRepository orderMasterRepository;
 
 
-    @Qualifier("product")
     @Autowired
     private ProductClient productClient;
 
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
-        String orderId= KeyUtil.genUniqueKey();
+        String orderId = KeyUtil.genUniqueKey();
         //查询商品信息（调用商品服务）
-        List<ProductInfoOutput> productInfoList=productClient.listForOrder(orderDTO.getOrderDetailList().stream().map(OrderDetail::getProductId).collect(Collectors.toList()));
-        if(productInfoList==null){
+        List<ProductInfoOutput> productInfoList = productClient.listForOrder(orderDTO.getOrderDetailList().stream().map(OrderDetail::getProductId).collect(Collectors.toList()));
+        if (productInfoList == null) {
             throw new RuntimeException("服务超时，请重试");
         }
 
         //计算总价
-        BigDecimal orderAmout=new BigDecimal(BigInteger.ONE);
-        for (OrderDetail orderDetail:orderDTO.getOrderDetailList()
+        BigDecimal orderAmout = new BigDecimal(BigInteger.ONE);
+        for (OrderDetail orderDetail : orderDTO.getOrderDetailList()
         ) {
-            for (ProductInfoOutput productInfo:productInfoList
-                 ) {
-                orderAmout=productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(orderAmout);
-                BeanUtils.copyProperties(productInfo,orderDetail);
+            for (ProductInfoOutput productInfo : productInfoList
+            ) {
+                orderAmout = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(orderAmout);
+                BeanUtils.copyProperties(productInfo, orderDetail);
                 orderDetail.setOrderId(orderId);
                 orderDetail.setDetailId(KeyUtil.genUniqueKey());
                 //订单详情入库
@@ -72,13 +71,13 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         //扣库存
-        List<DecreaseStockInput> decreaseStockInputList=orderDTO.getOrderDetailList().stream()
-                .map(e->new DecreaseStockInput(e.getProductId(),e.getProductQuantity())).collect(Collectors.toList());
+        List<DecreaseStockInput> decreaseStockInputList = orderDTO.getOrderDetailList().stream()
+                .map(e -> new DecreaseStockInput(e.getProductId(), e.getProductQuantity())).collect(Collectors.toList());
         productClient.decreaseStock(decreaseStockInputList);
         //订单入库
-        OrderMaster orderMaster=new OrderMaster();
+        OrderMaster orderMaster = new OrderMaster();
         orderDTO.setOrderId(orderId);
-        BeanUtils.copyProperties(orderDTO,orderMaster);
+        BeanUtils.copyProperties(orderDTO, orderMaster);
         orderDTO.setOrderStatus(OrderStatusEnum.NEW.getCode());
         return orderDTO;
     }
@@ -87,25 +86,25 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDTO finish(String orderId) {
         //1.查询订单
-        Optional<OrderMaster> optionalOrderMaster= orderMasterRepository.findById(orderId);
-        if(!optionalOrderMaster.isPresent()){
+        Optional<OrderMaster> optionalOrderMaster = orderMasterRepository.findById(orderId);
+        if (!optionalOrderMaster.isPresent()) {
             throw new OrderException(ResultEnum.ORDER_NOT_EXIST);
         }
         //2.判断订单状态
-        OrderMaster orderMaster=optionalOrderMaster.get();
-        if(!orderMaster.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())){
+        OrderMaster orderMaster = optionalOrderMaster.get();
+        if (!orderMaster.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
             throw new OrderException(ResultEnum.ORDER_STATUS_ERROR);
         }
         //3.修改订单状态为完结
         orderMaster.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
         orderMasterRepository.save(orderMaster);
         //4.查询订单详情
-        List<OrderDetail> orderDetailList= orderDetailRepository.findByOrderId(orderId);
-        if(CollectionUtils.isEmpty(orderDetailList)){
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
+        if (CollectionUtils.isEmpty(orderDetailList)) {
             throw new OrderException(ResultEnum.ORDER_DETAIL_NOT_EXIST);
         }
-        OrderDTO orderDTO=new OrderDTO();
-        BeanUtils.copyProperties(orderMaster,orderDTO);
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(orderMaster, orderDTO);
         orderDTO.setOrderDetailList(orderDetailList);
         return orderDTO;
     }

@@ -26,22 +26,22 @@ public class StreamReceiver {
 //    }
 
     /**
+     * @param
      * @description: 接收OrderDTO对象消息
      * @author: snail
      * @create: 16:30 2020/4/9
      * @Version: 1.0
-     * @param
      * @return: void
      **/
     @StreamListener(StreamClient.INPUT)
     @SendTo(StreamClient.INPUT2)
-    public String process(OrderDTO message){
-        log.info("StreamReceiver:{}",message);
+    public String process(OrderDTO message) {
+        log.info("StreamReceiver:{}", message);
         return "received";
     }
 
     @StreamListener(StreamClient.INPUT2)
-    public void process2(String message){
-        log.info("StreamReceiver2:{}",message);
+    public void process2(String message) {
+        log.info("StreamReceiver2:{}", message);
     }
 }

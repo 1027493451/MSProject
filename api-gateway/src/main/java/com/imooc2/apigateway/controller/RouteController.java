@@ -31,12 +31,13 @@ public class RouteController {
     private String group;
 
     @GetMapping("test")
-    public String test(){
+    public String test() {
         return dataId + "," + group;
     }
 
     /**
      * 增加路由
+     *
      * @param gwdefinition
      * @return
      */
@@ -64,10 +65,10 @@ public class RouteController {
 
     private RouteDefinition assembleRouteDefinition(GatewayRouteDefinition gwdefinition) {
         RouteDefinition definition = new RouteDefinition();
-        List<PredicateDefinition> pdList=new ArrayList<>();
+        List<PredicateDefinition> pdList = new ArrayList<>();
         definition.setId(gwdefinition.getId());
-        List<GatewayPredicateDefinition> gatewayPredicateDefinitionList=gwdefinition.getPredicates();
-        for (GatewayPredicateDefinition gpDefinition: gatewayPredicateDefinitionList) {
+        List<GatewayPredicateDefinition> gatewayPredicateDefinitionList = gwdefinition.getPredicates();
+        for (GatewayPredicateDefinition gpDefinition : gatewayPredicateDefinitionList) {
             PredicateDefinition predicate = new PredicateDefinition();
             predicate.setArgs(gpDefinition.getArgs());
             predicate.setName(gpDefinition.getName());

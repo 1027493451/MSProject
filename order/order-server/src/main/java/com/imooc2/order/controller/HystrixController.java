@@ -44,8 +44,8 @@ public class HystrixController {
 //    })
     @HystrixCommand //超时设置设置到配置文件
     @GetMapping("/getProductInfoList")
-    public String getProductInfoList(HttpServletRequest req,@RequestParam("number") Integer number){
-        if(number % 2==0){
+    public String getProductInfoList(HttpServletRequest req, @RequestParam("number") Integer number) {
+        if (number % 2 == 0) {
             return "success";
         }
         HttpHeaders headers = new HttpHeaders();
@@ -53,7 +53,7 @@ public class HystrixController {
         headers.add("form", "gateway");
 
         //RestTemplate restTemplate = RestTemplateUtil.getInstance("utf-8");
-        HttpEntity<List<String>> entity = new HttpEntity<>(Arrays.asList("1"),headers);
+        HttpEntity<List<String>> entity = new HttpEntity<>(Arrays.asList("1"), headers);
 
         //RestTemplate restTemplate=new RestTemplate();
         RestTemplate restTemplate = RestTemplateUtil.getInstance("utf-8");
@@ -67,11 +67,11 @@ public class HystrixController {
 //        throw new RuntimeException("发生异常，触发降级");
     }
 
-    private String fallback(){
+    private String fallback() {
         return "太拥挤了，请稍后再试";
     }
 
-    private String defaultFallback(){
+    private String defaultFallback() {
         return "默认设置：太拥挤了，请稍后再试";
     }
 }

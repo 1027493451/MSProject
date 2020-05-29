@@ -11,6 +11,7 @@ import com.imooc2.order.dto.OrderDTO;
 public interface OrderService {
     /**
      * 创建订单
+     *
      * @param orderDTO
      * @return
      */
@@ -19,6 +20,7 @@ public interface OrderService {
 
     /**
      * 完成订单（只能卖家）
+     *
      * @param orderId
      * @return OrderDTO
      */

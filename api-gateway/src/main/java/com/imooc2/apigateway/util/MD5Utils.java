@@ -17,7 +17,7 @@ public class MD5Utils {
     public static String getMD5(byte[] source) {
         String s = null;
         char hexDigits[] = { // 用来将字节转换成 16 进制表示的字符
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
             byte tmp[];

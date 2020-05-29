@@ -1,5 +1,7 @@
 package com.imooc2.apigateway.model;
 
+//import com.terran4j.commons.api2doc.annotations.ApiComment;
+
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +15,10 @@ import java.util.Map;
 @Component
 public class GatewayPredicateDefinition {
 
-    /**
-     * 断言对应的Name
-     */
+    //@ApiComment(value = "断言对应的Name")
     private String name;
 
-    /**
-     * 配置的断言规则
-     */
+    //@ApiComment(value = "配置的断言规则")
     private Map<String, String> args = new LinkedHashMap<>();
 
 }

@@ -1,5 +1,7 @@
 package com.imooc2.apigateway.model;
 
+//import com.terran4j.commons.api2doc.annotations.ApiComment;
+
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +15,10 @@ import java.util.Map;
 @Component
 public class GatewayFilterDefinition {
 
-    /**
-     * Filter Name
-     */
+    //@ApiComment(value = "路由名字")
     private String name;
 
-    /**
-     * 对应的路由规则
-     */
+    //@ApiComment(value = "对应的路由规则")
     private Map<String, String> args = new LinkedHashMap<>();
 
 }

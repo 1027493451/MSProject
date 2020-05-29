@@ -19,11 +19,11 @@ public interface StreamClient {
 //
 //    String OUTPUT="myMessage";
 
-    String INPUT="input";
-    String OUTPUT="output";
+    String INPUT = "input";
+    String OUTPUT = "output";
 
-    String INPUT2="input2";
-    String OUTPUT2="output2";
+    String INPUT2 = "input2";
+    String OUTPUT2 = "output2";
 
     @Input(StreamClient.INPUT)
     SubscribableChannel input();

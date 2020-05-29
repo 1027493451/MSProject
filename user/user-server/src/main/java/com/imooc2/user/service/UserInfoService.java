@@ -11,12 +11,12 @@ import com.imooc2.user.dataobject.UserInfo;
  **/
 public interface UserInfoService {
     /**
-    * @description: 通过openid查找用户
-    * @author: snail
-    * @create: 16:29 2020/4/23
-    * @Version: 1.0
-    * @param openid
-    * @return: com.imooc.user.dataobject.UserInfo
-    **/
+     * @param openid
+     * @description: 通过openid查找用户
+     * @author: snail
+     * @create: 16:29 2020/4/23
+     * @Version: 1.0
+     * @return: com.imooc.user.dataobject.UserInfo
+     **/
     UserInfo findByOpenid(String openid);
 }

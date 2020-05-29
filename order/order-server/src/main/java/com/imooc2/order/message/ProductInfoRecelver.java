@@ -26,25 +26,26 @@ public class ProductInfoRecelver {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-    private final String PRODUCT_STOCK_TEMPLATE="product_stock_%s";
+    private final String PRODUCT_STOCK_TEMPLATE = "product_stock_%s";
 
     /**
-    * @description: 接收队列为productInfo 的MQ消息
-    * @author: snail
-    * @create: 10:28 2020/4/10
-    * @Version: 1.0
-    * @param message
-    * @return: void
-    **/
+     * @param message
+     * @description: 接收队列为productInfo 的MQ消息
+     * @author: snail
+     * @create: 10:28 2020/4/10
+     * @Version: 1.0
+     * @return: void
+     **/
     @RabbitListener(queuesToDeclare = @Queue("productInfo"))
-    public void process(String message){
+    public void process(String message) {
         //message => ProductInfoOutput
-        List<ProductInfoOutput> productInfoOutputList = (List<ProductInfoOutput>) JsonUtil.fromJson(message, new TypeReference<List<ProductInfoOutput>>() {});
-        log.info("从队列[{}]接受消息：{}","productInfo",productInfoOutputList);
+        List<ProductInfoOutput> productInfoOutputList = (List<ProductInfoOutput>) JsonUtil.fromJson(message, new TypeReference<List<ProductInfoOutput>>() {
+        });
+        log.info("从队列[{}]接受消息：{}", "productInfo", productInfoOutputList);
 
-        productInfoOutputList.forEach(e->{
+        productInfoOutputList.forEach(e -> {
             //存储到redis
-            stringRedisTemplate.opsForValue().set(String.format(PRODUCT_STOCK_TEMPLATE,e.getProductId()),
+            stringRedisTemplate.opsForValue().set(String.format(PRODUCT_STOCK_TEMPLATE, e.getProductId()),
                     String.valueOf(e.getProductStock()));
         });
     }

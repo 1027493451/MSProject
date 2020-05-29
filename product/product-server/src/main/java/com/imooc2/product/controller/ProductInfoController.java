@@ -3,6 +3,11 @@ package com.imooc2.product.controller;
 import com.imooc2.product.common.DecreaseStockInput;
 import com.imooc2.product.dataobject.ProductCategory;
 import com.imooc2.product.service.ProductService;
+import com.terran4j.commons.api2doc.annotations.Api2Doc;
+import com.terran4j.commons.api2doc.annotations.ApiComment;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api(value = "商品接口", tags = "商品管理")
+@Api2Doc(id = "product", name = "产品接口")
+@ApiComment(seeClass = ProductInfo.class)
 @RequestMapping("/product")
 @RestController
 public class ProductInfoController {
@@ -31,6 +39,8 @@ public class ProductInfoController {
     @Autowired
     private ProductInfoRepository productInfoRepository;
 
+    @ApiComment("获取所有产品")
+    @ApiOperation(value = "获取所有产品")
     @GetMapping("/getAll")
     public List<ProductInfo> getUser() {
         List<ProductInfo> list = productInfoRepository.findAll();
@@ -86,6 +96,8 @@ public class ProductInfoController {
      * @return
      */
     @PostMapping("/listForOrder")
+    @ApiImplicitParam(paramType = "path", dataType = "List<String>", name = "productIdList", value = "商品列表id", required = true, example = "{1，2}")
+    @ApiOperation(value = "获取商品列表", notes = "XX")
     public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList) {
         return productService.findList(productIdList);
     }

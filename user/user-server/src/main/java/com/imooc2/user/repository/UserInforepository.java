@@ -12,6 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @return $
  * @Version 1.0
  **/
-public interface UserInforepository extends JpaRepository<UserInfo,String> {
+public interface UserInforepository extends JpaRepository<UserInfo, String> {
     UserInfo findByOpenid(String openid);
 }

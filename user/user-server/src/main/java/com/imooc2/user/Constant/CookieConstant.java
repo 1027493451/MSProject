@@ -9,10 +9,10 @@ package com.imooc2.user.Constant;
  * @Version 1.0
  **/
 public interface CookieConstant {
-    String TOKEN="token";
-    String OPENID="openid";
+    String TOKEN = "token";
+    String OPENID = "openid";
     /*
-    * 过期时间（单位：s）
-    * */
-    Integer exipre =7200;
+     * 过期时间（单位：s）
+     * */
+    Integer exipre = 7200;
 }

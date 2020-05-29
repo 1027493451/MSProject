@@ -28,24 +28,24 @@ public class RedisUUID {
     // 过期前1分钟
     private final static long lastTime = 1000 * 60;
 
-    public String create(String key){
-        if(StrUtil.isBlank(key)){
+    public String create(String key) {
+        if (StrUtil.isBlank(key)) {
             return null;
         }
         String secretKey;
-        if(redisTemplate.hasKey(key)){
-            if(redisTemplate.boundHashOps(key).getExpire() < lastTime){
-                redisTemplate.opsForValue().set(key,SecureUtil.md5(UUID.randomUUID().toString()),expiration, TimeUnit.SECONDS);
+        if (redisTemplate.hasKey(key)) {
+            if (redisTemplate.boundHashOps(key).getExpire() < lastTime) {
+                redisTemplate.opsForValue().set(key, SecureUtil.md5(UUID.randomUUID().toString()), expiration, TimeUnit.SECONDS);
             }
             secretKey = (String) redisTemplate.opsForValue().get(key);
-        }else{
+        } else {
             secretKey = SecureUtil.md5(UUID.randomUUID().toString());
-            redisTemplate.opsForValue().set(key,secretKey,expiration,TimeUnit.SECONDS);
+            redisTemplate.opsForValue().set(key, secretKey, expiration, TimeUnit.SECONDS);
         }
         return secretKey;
     }
 
-    public Object get(String key){
+    public Object get(String key) {
         return redisTemplate.opsForValue().get(key);
     }
 }

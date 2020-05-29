@@ -36,7 +36,7 @@ public class JwtUtil {
      *
      * @return
      */
-    public static SecretKey generalKey(){
+    public static SecretKey generalKey() {
         byte[] encodedKey = Base64.decodeBase64(KEY);
         SecretKeySpec key = new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
 
@@ -45,6 +45,7 @@ public class JwtUtil {
 
     /**
      * 创建jwt
+     *
      * @param id
      * @param issuer
      * @param subject
@@ -108,6 +109,7 @@ public class JwtUtil {
 
     /**
      * 检查token
+     *
      * @return
      */
     public static boolean checkToken(String jwtToken, ObjectMapper objectMapper) throws Exception {
@@ -125,7 +127,7 @@ public class JwtUtil {
          */
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date expiration = claims.getExpiration();
-        log.info("======== token的过期时间："+df.format(expiration));
+        log.info("======== token的过期时间：" + df.format(expiration));
         return true;
     }
 

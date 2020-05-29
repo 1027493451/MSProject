@@ -26,26 +26,26 @@ public class MqReceiver {
             value = @Queue("myQueue"),
             exchange = @Exchange("myExchange")
     ))
-    public void process(String message){
-        log.info("MqReceiver:{}",message);
+    public void process(String message) {
+        log.info("MqReceiver:{}", message);
     }
 
     /**
-    * @description: 用不同方法模拟不同服务调用消息队列，发送消息用测试类实现
-     *                 kry是不同类型
-    * @author: snail
-    * @create: 15:16 2020/4/2
-    * @Version: 1.0
-    * @param message
-    * @return: void
-    **/
+     * @param message
+     * @description: 用不同方法模拟不同服务调用消息队列，发送消息用测试类实现
+     * kry是不同类型
+     * @author: snail
+     * @create: 15:16 2020/4/2
+     * @Version: 1.0
+     * @return: void
+     **/
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue("computerOrder"),
             exchange = @Exchange("myQueue"),
             key = "computer"
     ))
-    public void processComputer(String message){
-        log.info("computer MqReceiver:{}",message);
+    public void processComputer(String message) {
+        log.info("computer MqReceiver:{}", message);
     }
 
     @RabbitListener(bindings = @QueueBinding(
@@ -53,7 +53,7 @@ public class MqReceiver {
             exchange = @Exchange("myQueue"),
             key = "fruit"
     ))
-    public void processFruit(String message){
-        log.info("fruit MqReceiver:{}",message);
+    public void processFruit(String message) {
+        log.info("fruit MqReceiver:{}", message);
     }
 }

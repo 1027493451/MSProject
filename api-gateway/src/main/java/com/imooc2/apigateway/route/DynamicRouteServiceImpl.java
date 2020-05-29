@@ -21,6 +21,7 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
 
     /**
      * 增加路由
+     *
      * @param definition
      * @return
      */
@@ -33,6 +34,7 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
 
     /**
      * 更新路由
+     *
      * @param definition
      * @return
      */
@@ -40,7 +42,7 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
         try {
             this.routeDefinitionWriter.delete(Mono.just(definition.getId()));
         } catch (Exception e) {
-            return "update fail,not find route  routeId: "+definition.getId();
+            return "update fail,not find route  routeId: " + definition.getId();
         }
         try {
             routeDefinitionWriter.save(Mono.just(definition)).subscribe();
@@ -52,8 +54,10 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
 
 
     }
+
     /**
      * 删除路由
+     *
      * @param id
      * @return
      */

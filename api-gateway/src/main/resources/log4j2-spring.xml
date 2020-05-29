@@ -8,7 +8,7 @@
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
         <RollingRandomAccessFile name="info-log"
@@ -38,14 +38,14 @@
 
     <Loggers>
         <Root level="info">
-            <AppenderRef ref="info-log" />
+            <AppenderRef ref="info-log"/>
         </Root>
         <Logger name="request" level="info"
                 additivity="false">
             <AppenderRef ref="request-log"/>
         </Logger>
         <Logger name="org.springframework">
-            <AppenderRef ref="Console" />
+            <AppenderRef ref="Console"/>
         </Logger>
     </Loggers>
 </Configuration>

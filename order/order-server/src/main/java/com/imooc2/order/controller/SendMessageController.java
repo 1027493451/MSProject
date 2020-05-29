@@ -28,8 +28,8 @@ public class SendMessageController {
 
 
     @GetMapping("/sendMessage")
-    public void process(){
-        OrderDTO orderDTO=new OrderDTO();
+    public void process() {
+        OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderId("123456");
         streamClient.output().send(MessageBuilder.withPayload(orderDTO).build());
     }

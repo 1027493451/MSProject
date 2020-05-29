@@ -40,32 +40,33 @@ public class DynamicRouteServiceImplByNacos {
     /**
      * 监听Nacos Server下发的动态路由配置
      */
-    public void dynamicRouteByNacosListener (){
+    public void dynamicRouteByNacosListener() {
         try {
-            ConfigService configService=NacosFactory.createConfigService(nacosGatewayProperties.getServerAddr());
+            ConfigService configService = NacosFactory.createConfigService(nacosGatewayProperties.getServerAddr());
             String content = configService.getConfig(nacosGatewayProperties.getDataId(), nacosGatewayProperties.getGroup(), nacosGatewayProperties.getTimeout());
-            logger.info("nacos初始化监听,{}",content);
-            configService.addListener(nacosGatewayProperties.getDataId(), nacosGatewayProperties.getGroup(), new Listener()  {
+            logger.info("nacos初始化监听,{}", content);
+            configService.addListener(nacosGatewayProperties.getDataId(), nacosGatewayProperties.getGroup(), new Listener() {
 
                 @Override
                 public void receiveConfigInfo(String configInfo) {
                     try {
                         List<RouteDefinition> gatewayRouteDefinitions = JSONObject.parseArray(configInfo, RouteDefinition.class);
-                        for (RouteDefinition routeDefinition : gatewayRouteDefinitions){
+                        for (RouteDefinition routeDefinition : gatewayRouteDefinitions) {
                             logger.info("遍历:" + routeDefinition.toString());
                             dynamicRouteService.update(routeDefinition);
                         }
-                    }catch (Exception e){
-                        logger.error("更新配置出错:",e);
+                    } catch (Exception e) {
+                        logger.error("更新配置出错:", e);
                     }
                 }
+
                 @Override
                 public Executor getExecutor() {
                     return null;
                 }
             });
         } catch (NacosException e) {
-            logger.error("初始化nacos监听出错:",e);
+            logger.error("初始化nacos监听出错:", e);
         }
     }
 

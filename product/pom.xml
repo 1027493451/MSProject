@@ -29,9 +29,14 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.github.terran4j</groupId>
+            <artifactId>terran4j-commons-api2doc</artifactId>
+            <version>${api2doc.version}</version>
         </dependency>
     </dependencies>
 

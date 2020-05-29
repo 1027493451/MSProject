@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  **/
 @RestController
 @RequestMapping("/login")
-public class LoginController  {
+public class LoginController {
 
     @Autowired
     private UserInfoService userInfoService;
@@ -43,65 +43,65 @@ public class LoginController  {
     private StringRedisTemplate stringRedisTemplate;
 
     /**
-    * @description: 买家登陆
-    * @author: snail
-    * @create: 16:40 2020/4/23
-    * @Version: 1.0
-    * @param openid
-	* @param response
-    * @return: com.imooc.user.VO.ResultVO
-    **/
+     * @param openid
+     * @param response
+     * @description: 买家登陆
+     * @author: snail
+     * @create: 16:40 2020/4/23
+     * @Version: 1.0
+     * @return: com.imooc.user.VO.ResultVO
+     **/
     @GetMapping("/buyer")
-    public ResultVO buyer(@RequestParam String openid, HttpServletResponse response){
+    public ResultVO buyer(@RequestParam String openid, HttpServletResponse response) {
         //1. openid和数据库的数据匹配
-        UserInfo userInfo=userInfoService.findByOpenid(openid);
-        if(userInfo==null){
+        UserInfo userInfo = userInfoService.findByOpenid(openid);
+        if (userInfo == null) {
             return ResultVOUtil.error(ResultEnum.LOGIN_ERROR);
         }
         //2.判断角色
-        if(RoleEnum.BUYER.getCode() != userInfo.getRole()){
+        if (RoleEnum.BUYER.getCode() != userInfo.getRole()) {
             return ResultVOUtil.error(ResultEnum.ROLE_ERROR);
         }
         //3.cookid里设置openid=abc
-        CookieUtil.set(response, CookieConstant.OPENID,openid,CookieConstant.exipre);
+        CookieUtil.set(response, CookieConstant.OPENID, openid, CookieConstant.exipre);
         return ResultVOUtil.success();
     }
 
     /**
+     * @param openid
+     * @param response
      * @description: 卖家登陆
      * @author: snail
      * @create: 16:40 2020/4/23
      * @Version: 1.0
-     * @param openid
-     * @param response
      * @return: com.imooc.user.VO.ResultVO
      **/
     @GetMapping("/seller")
-    public ResultVO seller(@RequestParam String openid, HttpServletResponse response, HttpServletRequest request){
+    public ResultVO seller(@RequestParam String openid, HttpServletResponse response, HttpServletRequest request) {
         //判断是否已登录
-        Cookie cookie=CookieUtil.get(request,CookieConstant.TOKEN);
-        if(cookie !=null &&
-                !StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format(RedisConstant.TOKEN_TRMPLATE,cookie.getValue())))){
+        Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
+        if (cookie != null &&
+                !StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format(RedisConstant.TOKEN_TRMPLATE, cookie.getValue())))) {
             return ResultVOUtil.success();
         }
 
         //1. openid和数据库的数据匹配
-        UserInfo userInfo=userInfoService.findByOpenid(openid);
-        if(userInfo==null){
+        UserInfo userInfo = userInfoService.findByOpenid(openid);
+        if (userInfo == null) {
             return ResultVOUtil.error(ResultEnum.LOGIN_ERROR);
         }
         //2.判断角色
-        if(RoleEnum.SELLER.getCode() != userInfo.getRole()){
+        if (RoleEnum.SELLER.getCode() != userInfo.getRole()) {
             return ResultVOUtil.error(ResultEnum.ROLE_ERROR);
         }
 
         //3.redis设置key=uuid,value=xyz
-        String token= UUID.randomUUID().toString();
-        Integer expire=CookieConstant.exipre;
-        stringRedisTemplate.opsForValue().set(String.format(RedisConstant.TOKEN_TRMPLATE,token),openid,expire, TimeUnit.SECONDS);
+        String token = UUID.randomUUID().toString();
+        Integer expire = CookieConstant.exipre;
+        stringRedisTemplate.opsForValue().set(String.format(RedisConstant.TOKEN_TRMPLATE, token), openid, expire, TimeUnit.SECONDS);
 
         //4.cookid里设置openid=abc
-        CookieUtil.set(response, CookieConstant.TOKEN,token,CookieConstant.exipre);
+        CookieUtil.set(response, CookieConstant.TOKEN, token, CookieConstant.exipre);
         return ResultVOUtil.success();
     }
 

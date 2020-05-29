@@ -40,9 +40,9 @@ public class ErrorController extends BasicErrorController {
 //            body.put("status", HttpStatus.FORBIDDEN.value());
 //            status = HttpStatus.FORBIDDEN;
 //
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("code",body.get("status"));
-        map.put("msg",body.get("message"));
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", body.get("status"));
+        map.put("msg", body.get("message"));
         return new ResponseEntity<Map<String, Object>>(map, status);
     }
 }

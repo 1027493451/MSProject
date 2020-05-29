@@ -10,8 +10,8 @@ import lombok.Getter;
  **/
 @Getter
 public enum ResultEnum {
-    LOGIN_ERROR(1,"登录失败"),
-    ROLE_ERROR(2,"角色权限有误"),
+    LOGIN_ERROR(1, "登录失败"),
+    ROLE_ERROR(2, "角色权限有误"),
     ;
 
     private Integer code;

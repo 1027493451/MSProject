@@ -1,6 +1,8 @@
 package com.imooc2.apigateway.model;
 
 
+//import com.terran4j.commons.api2doc.annotations.ApiComment;
+
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,16 +18,20 @@ import org.springframework.stereotype.Component;
  **/
 @Data
 @Component
-@ConfigurationProperties(prefix="nacos")
+@ConfigurationProperties(prefix = "nacos")
 public class NacosGatewayProperties {
 
+    //@ApiComment(value = "nacos服务ip地址")
     @Value("${spring.cloud.nacos.config.server-addr}")
     private String serverAddr;
 
+    //@ApiComment(value = "nacos服务里配置文件id")
     private String dataId;
 
+    //@ApiComment(value = "nacos服务里配置文件分组")
     private String group;
 
+    //@ApiComment(value = "nacos超时设置，默认5000（5秒）")
     @Value("${spring.cloud.nacos.config.timeout}")
     private Long timeout;
 

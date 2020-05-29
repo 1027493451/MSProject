@@ -3,11 +3,11 @@ package com.imooc2.order.enums;
 import lombok.Getter;
 
 /**
-* @description:
-* @author: snail
-* @create: 14:14 2020/3/27
-* @Version: 1.0
-**/
+ * @description:
+ * @author: snail
+ * @create: 14:14 2020/3/27
+ * @Version: 1.0
+ **/
 @Getter
 public enum OrderStatusEnum {
     NEW(0, "新订单"),
