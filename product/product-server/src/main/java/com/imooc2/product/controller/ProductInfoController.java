@@ -1,31 +1,29 @@
 package com.imooc2.product.controller;
 
+import com.imooc2.product.VO.ProductInfoVO;
+import com.imooc2.product.VO.ProductVO;
+import com.imooc2.product.VO.ResultVO;
 import com.imooc2.product.common.DecreaseStockInput;
 import com.imooc2.product.dataobject.ProductCategory;
+import com.imooc2.product.dataobject.ProductInfo;
+import com.imooc2.product.repository.ProductInfoRepository;
+import com.imooc2.product.service.CategoryService;
 import com.imooc2.product.service.ProductService;
-import com.terran4j.commons.api2doc.annotations.Api2Doc;
-import com.terran4j.commons.api2doc.annotations.ApiComment;
+import com.imooc2.product.utils.ResultVOUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.imooc2.product.VO.ProductInfoVO;
-import com.imooc2.product.VO.ProductVO;
-import com.imooc2.product.VO.ResultVO;
-import com.imooc2.product.dataobject.ProductInfo;
-import com.imooc2.product.repository.ProductInfoRepository;
-import com.imooc2.product.service.CategoryService;
-import com.imooc2.product.utils.ResultVOUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(value = "商品接口", tags = "商品管理")
-@Api2Doc(id = "product", name = "产品接口")
-@ApiComment(seeClass = ProductInfo.class)
+//@Api2Doc(id = "product", name = "产品接口")
+//@ApiComment(seeClass = ProductInfo.class)
+@Api(value = "商品接口", tags = "商品管理" )
 @RequestMapping("/product")
 @RestController
 public class ProductInfoController {
@@ -39,8 +37,8 @@ public class ProductInfoController {
     @Autowired
     private ProductInfoRepository productInfoRepository;
 
-    @ApiComment("获取所有产品")
-    @ApiOperation(value = "获取所有产品")
+    //@ApiComment(value = "获取所有产品")
+    @ApiOperation(value = "获取所有产品",httpMethod = "Get")
     @GetMapping("/getAll")
     public List<ProductInfo> getUser() {
         List<ProductInfo> list = productInfoRepository.findAll();
@@ -55,6 +53,7 @@ public class ProductInfoController {
      */
     //@CrossOrigin(allowCredentials = "true")
     @GetMapping("/list")
+    @ApiOperation(value = "查询所有在架的商品",httpMethod = "Get")
     public ResultVO<ProductVO> list() {
         //1. 查询所有在架的商品
         List<ProductInfo> productInfoList = productService.findUpAll();
@@ -89,15 +88,18 @@ public class ProductInfoController {
         return ResultVOUtil.success(productVOList);
     }
 
+
     /**
-     * 获取商品列表(给订单服务用的)
-     *
-     * @param productIdList
-     * @return
-     */
-    @PostMapping("/listForOrder")
+    * @description: 获取商品列表(给订单服务用的)
+    * @author: snail
+    * @create: 10:53 2020/6/1
+    * @Version: 1.0
+    * @param productIdList
+    * @return: java.util.List<com.imooc2.product.dataobject.ProductInfo>
+    **/
+    @ApiOperation(value = "获取商品列表", notes = "根据商品列表id获取商品列表详细信息",httpMethod = "Post")
     @ApiImplicitParam(paramType = "path", dataType = "List<String>", name = "productIdList", value = "商品列表id", required = true, example = "{1，2}")
-    @ApiOperation(value = "获取商品列表", notes = "XX")
+    @PostMapping("/listForOrder")
     public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList) {
         return productService.findList(productIdList);
     }
@@ -110,6 +112,7 @@ public class ProductInfoController {
      * @Version: 1.0
      * @return: void
      **/
+    @ApiOperation(value = "扣库存",httpMethod = "Post")
     @PostMapping("/decreaseStock")
     public void decreaseStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList) {
         productService.decreaseStock(decreaseStockInputList);

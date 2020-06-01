@@ -51,7 +51,7 @@ public class SwaggerConfig {
         return new ApiInfo(
                 "微服务系统Api接口", // 标题
                 "个人搭建测试", // 描述
-                "版本内容：v1.0", // 版本
+                "2.0", // 版本
                 "链接：http://terms.service.url/", // 组织链接
                 contact, // 联系人信息
                 "许可：sxj 1.0 ", // 许可

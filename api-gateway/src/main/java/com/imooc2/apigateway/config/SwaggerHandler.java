@@ -22,7 +22,7 @@ import java.util.Optional;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping("/swagger-resources")
+//@RequestMapping("/swagger-resources")
 public class SwaggerHandler {
     @Autowired(required = false)
     private SecurityConfiguration securityConfiguration;

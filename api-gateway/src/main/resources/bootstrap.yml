@@ -1,14 +1,12 @@
-# 需要配置的服务名
-blade:
-  service:
-    blade-auth: product
-
 spring:
+#  profiles:
+#    active: dev
   application:
     name: api-gateway
   cloud:
     nacos:
       config:
+        timeout: 5000
         file-extension: yaml
         server-addr: 127.0.0.1:8848
       discovery:
@@ -17,35 +15,35 @@ spring:
       discovery:
         locator:
           enabled: true
-      routes:
-        - id: ${blade.service.blade-auth}
-          uri: lb://${blade.service.blade-auth}
-          predicates:
-            - Path=/${blade.service.blade-auth}/**
-          filters:
-            - name: RequestRateLimiter
-              args:
-                # 使用SpEL按名称引用bean
-                key-resolver: '#{@remoteAddrKeyResolver}'
-                # 允许用户每秒处理多少个请求
-                redis-rate-limiter.replenishRate: 10
-                # 允许在一秒钟内完成的最大请求数
-                redis-rate-limiter.burstCapacity: 20
-            - StripPrefix=1
-        - id: baidu
-          uri: https://www.baidu.com
-          predicates:
-            - Path=/baidu/**
-          filters:
-            - StripPrefix=1
-        - id: dalaoyang
-          uri: http://www.dalaoyang.cn/
-          predicates:
-            - Path=/dalaoyang/**
-        - id: juejin
-          uri: https://juejin.im/user/5aa50b96f265da23866f836e
-          predicates:
-            - Path=/juejin/**
+#      routes:
+#        - id: ${blade.service.blade-auth}
+#          uri: lb://${blade.service.blade-auth}
+#          predicates:
+#            - Path=/${blade.service.blade-auth}/**
+#          filters:
+#            - name: RequestRateLimiter
+#              args:
+#                # 使用SpEL按名称引用bean
+#                key-resolver: '#{@remoteAddrKeyResolver}'
+#                # 允许用户每秒处理多少个请求
+#                redis-rate-limiter.replenishRate: 10
+#                # 允许在一秒钟内完成的最大请求数
+#                redis-rate-limiter.burstCapacity: 20
+#            - StripPrefix=1
+#        - id: baidu
+#          uri: https://www.baidu.com
+#          predicates:
+#            - Path=/baidu/**
+#          filters:
+#            - StripPrefix=1
+#        - id: dalaoyang
+#          uri: http://www.dalaoyang.cn/
+#          predicates:
+#            - Path=/dalaoyang/**
+#        - id: juejin
+#          uri: https://juejin.im/user/5aa50b96f265da23866f836e
+#          predicates:
+#            - Path=/juejin/**
       globalcors:
         cors‐configurations:
           '[/**]': # 匹配所有请求
@@ -57,35 +55,5 @@ spring:
               - DELETE
 
 
-org:
-  my:
-    jwt:
-      #跳过认证的路由
-      skip-auth-urls:
-        - /product/api2doc/home.html
-        - /product/v2/api-docs
-        - /swagger-ui.html
-        - http://localhost:9000/swagger-ui.html
-      ############################################
-      #   有效时长
-      #     单位：d:天、h:小时、m:分钟、s:秒
-      ###########################################
-      effective-time: 1m
-
-#开启端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  security:
-    enabled: false
-
 server:
   port: 9000
-
-
-#logger
-logging:
-  level:
-    org.springframework.cloud.gateway: debug

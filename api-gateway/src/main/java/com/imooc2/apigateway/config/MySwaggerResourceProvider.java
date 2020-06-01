@@ -1,8 +1,6 @@
 package com.imooc2.apigateway.config;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.config.GatewayProperties;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.support.NameUtils;
@@ -12,9 +10,7 @@ import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @Author snail
@@ -28,15 +24,16 @@ import java.util.Set;
 @Primary
 @AllArgsConstructor
 public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
-    public static final String API_URI = "/v2/api-docs";
+    //public static final String API_URI = "/v2/api-docs";
+    public static final String API_URI = "/swagger-ui.html";
     private final RouteLocator routeLocator;
     private final GatewayProperties gatewayProperties;
-
 
     @Override
     public List<SwaggerResource> get() {
         List<SwaggerResource> resources = new ArrayList<>();
         List<String> routes = new ArrayList<>();
+        //Consumer<Route> XX= route -> routes.add(route.getId());
         routeLocator.getRoutes().subscribe(route -> routes.add(route.getId()));
         gatewayProperties.getRoutes().stream().filter(routeDefinition -> routes.contains(routeDefinition.getId()))
                 .forEach(routeDefinition -> routeDefinition.getPredicates().stream()
@@ -53,6 +50,7 @@ public class MySwaggerResourceProvider implements SwaggerResourcesProvider {
         swaggerResource.setName(name);
         swaggerResource.setLocation(location);
         swaggerResource.setSwaggerVersion("2.0");
+        //swaggerResource.setUrl("http://localhost:9000/product/swagger-ui.html");
         return swaggerResource;
     }
 
