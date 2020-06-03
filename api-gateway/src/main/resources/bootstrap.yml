@@ -15,44 +15,6 @@ spring:
       discovery:
         locator:
           enabled: true
-#      routes:
-#        - id: ${blade.service.blade-auth}
-#          uri: lb://${blade.service.blade-auth}
-#          predicates:
-#            - Path=/${blade.service.blade-auth}/**
-#          filters:
-#            - name: RequestRateLimiter
-#              args:
-#                # 使用SpEL按名称引用bean
-#                key-resolver: '#{@remoteAddrKeyResolver}'
-#                # 允许用户每秒处理多少个请求
-#                redis-rate-limiter.replenishRate: 10
-#                # 允许在一秒钟内完成的最大请求数
-#                redis-rate-limiter.burstCapacity: 20
-#            - StripPrefix=1
-#        - id: baidu
-#          uri: https://www.baidu.com
-#          predicates:
-#            - Path=/baidu/**
-#          filters:
-#            - StripPrefix=1
-#        - id: dalaoyang
-#          uri: http://www.dalaoyang.cn/
-#          predicates:
-#            - Path=/dalaoyang/**
-#        - id: juejin
-#          uri: https://juejin.im/user/5aa50b96f265da23866f836e
-#          predicates:
-#            - Path=/juejin/**
-      globalcors:
-        cors‐configurations:
-          '[/**]': # 匹配所有请求
-            allowedOrigins: "*" #跨域处理 允许所有的域
-            allowedMethods: # 支持的方法
-              - GET
-              - POST
-              - PUT
-              - DELETE
 
 
 server:

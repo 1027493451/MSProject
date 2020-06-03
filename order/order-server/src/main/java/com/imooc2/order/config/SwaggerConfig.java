@@ -1,4 +1,4 @@
-package com.imooc2.product.config;
+package com.imooc2.order.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
  **/
 @Configuration
 @EnableSwagger2
-@ComponentScan("com.imooc2.product.controller")
+@ComponentScan("com.imooc2.order.controller")
 public class SwaggerConfig {
 
     @Bean
@@ -32,13 +32,13 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 //apiInfo： 添加api详情信息，参数为ApiInfo类型的参数，这个参数包含了第二部分的所有信息比如标题、描述、版本之类的，开发中一般都会自定义这些信息
                 .apiInfo(apiInfo())
-                .groupName("product")
+                .groupName("order")
                 //配置是否启用Swagger，如果是false，在浏览器将无法访问，默认是true
                 .enable(true)
                 .select()
                 //apis： 添加过滤条件,
                 //.apis(RequestHandlerSelectors.basePackage("com.imooc2.product.Atest"))
-                .apis(RequestHandlerSelectors.basePackage("com.imooc2.product.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.imooc2.order.controller"))
                 //paths： 这里是控制哪些路径的api会被显示出来，比如下方的参数就是除了/user以外的其它路径都会生成api文档
                 .paths(PathSelectors.any())
 //                .paths((String a) ->
@@ -49,8 +49,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         Contact contact = new Contact("sxj", "个人链接：http://xxx.xxx.com/", "邮箱：1027493451@qq.com");
         return new ApiInfo(
-                "微服务系统Api接口", // 标题
-                "个人搭建测试", // 描述
+                "订单-api接口文档", // 标题
+                "测试", // 描述
                 "2.0", // 版本
                 "链接：http://terms.service.url/", // 组织链接
                 contact, // 联系人信息

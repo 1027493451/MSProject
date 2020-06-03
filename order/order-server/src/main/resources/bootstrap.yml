@@ -80,3 +80,6 @@ server:
 logging:
   level:
     org.springframework.cloud.openfeign: debug
+
+#swagger:
+#  base-package: com.imooc2.order.controller

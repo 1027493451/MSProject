@@ -1,17 +1,14 @@
 package com.imooc2.product;
 
-import com.terran4j.commons.api2doc.config.EnableApi2Doc;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//@SpringBootApplication
-//@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+//@EnableApi2Doc
+//@EnableSwagger2Doc
 @EnableSwagger2
-@EnableApi2Doc
 @SpringBootApplication
 public class ProductApplication extends SpringBootServletInitializer {
 

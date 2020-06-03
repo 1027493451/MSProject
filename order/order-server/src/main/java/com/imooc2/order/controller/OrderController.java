@@ -8,6 +8,9 @@ import com.imooc2.order.exception.OrderException;
 import com.imooc2.order.form.OrderForm;
 import com.imooc2.order.service.OrderService;
 import com.imooc2.order.utils.ResultVOUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -26,6 +29,7 @@ import java.util.Map;
  * @author: snail
  * @create: 11:50 2020/3/27
  **/
+@Api(value = "订单接口", tags = "订单管理" )
 @RestController
 @RequestMapping("/order")
 @Slf4j
@@ -41,6 +45,8 @@ public class OrderController {
      * 4. 扣库存(调用商品服务)
      * 5. 订单入库
      */
+    @ApiOperation(value = "创建订单")
+    @ApiImplicitParam(paramType = "path", dataType = "OrderForm", name = "orderForm", value = "订单对象", required = true, example = "{}")
     @PostMapping("/create")
     public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm,
                                                 BindingResult bindingResult) {
