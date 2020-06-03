@@ -4,11 +4,34 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        cors‐configurations:
+          '[/**]': # 匹配所有请求
+            allowedOrigins: "*" #跨域处理 允许所有的域
+            allowedMethods: # 支持的方法
+              - GET
+              - POST
+              - PUT
+              - DELETE
       routes:
-        - id: ${blade.service.blade-auth}
-          uri: lb://${blade.service.blade-auth}
+        - id: ${imooc.service.imooc-product}
+          uri: lb://${imooc.service.imooc-product}
           predicates:
-            - Path=/${blade.service.blade-auth}/**
+            - Path=/${imooc.service.imooc-product}/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                # 使用SpEL按名称引用bean
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                # 允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 10
+                # 允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 20
+            - StripPrefix=1
+        - id: ${imooc.service.imooc-order}
+          uri: lb://${imooc.service.imooc-order}
+          predicates:
+            - Path=/${imooc.service.imooc-order}/**
           filters:
             - name: RequestRateLimiter
               args:
@@ -30,9 +53,12 @@ management:
     enabled: false
 
 # 需要配置的服务名
-blade:
+imooc:
   service:
-    blade-auth: product
+    imooc-product: product
+    imooc-order: order
+    imooc-user: user
+
 
 server:
   port: 9000
