@@ -13,22 +13,11 @@
 
 
     <dependencies>
-
         <!--getset插件-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-web</artifactId>-->
-        <!--            <exclusions> &lt;!&ndash; 去除springboot默认的logback配置&ndash;&gt;-->
-        <!--                <exclusion>-->
-        <!--                    <groupId>org.springframework.boot</groupId>-->
-        <!--                    <artifactId>spring-boot-starter-logging</artifactId>-->
-        <!--                </exclusion>-->
-        <!--            </exclusions>-->
-        <!--        </dependency>-->
         <!-- 加入log4j2配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

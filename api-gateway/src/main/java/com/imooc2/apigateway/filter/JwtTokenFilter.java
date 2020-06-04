@@ -68,10 +68,9 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
         ServerHttpResponse resp = exchange.getResponse();
         if (StringUtils.isBlank(token)) {
-            //TODO 测试swagger2 先放心不用检测token
-            return chain.filter(exchange);
+
             //没有token
-            //return authErro(resp, "请登陆");
+            return authErro(resp, "请登陆");
         } else {
             //有token
             try {

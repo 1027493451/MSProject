@@ -1,11 +1,10 @@
-package com.imooc2.apigateway.controller;
+package com.imooc2.auth.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.imooc2.apigateway.VO.ResultVO;
-import com.imooc2.apigateway.dto.UserDTO;
-import com.imooc2.apigateway.model.JwtModel;
-import com.imooc2.apigateway.util.JwtUtil;
+import com.imooc2.auth.VO.ResultVO;
+import com.imooc2.auth.dto.UserDTO;
+import com.imooc2.auth.model.JwtModel;
+import com.imooc2.auth.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

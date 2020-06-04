@@ -12,7 +12,7 @@
         <module>product</module>
         <module>order</module>
         <module>user</module>
-        <!--        <module>client</module>-->
+        <module>auth</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
