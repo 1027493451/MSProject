@@ -1,8 +1,26 @@
 spring:
   application:
     name: product
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3307/SpringCloud_practice?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+  rabbitmq:
+    host: localhost
+    port: 5672
+    password: guest
+    username: guest
+  redis:
+    host: localhost
+    port: 6397
   cloud:
     nacos:
       config:
@@ -13,8 +31,24 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
 
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: uuid
+  mapper-locations: classpath:/mapper/*.xml
+
 server:
-  port: 8085
+  port: 9401
+
+#开启端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#server:
+#  port: 8085
 
 logging:
   level:

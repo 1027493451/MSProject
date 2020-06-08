@@ -30,10 +30,24 @@
         <spring-cloud-starter-hystrix.version>1.4.7.RELEASE</spring-cloud-starter-hystrix.version>
         <api2doc.version>1.0.2</api2doc.version>
         <swagger2.version>2.9.2</swagger2.version>
+        <druid.version>1.1.22</druid.version>
+        <mybatis-plus.version>3.3.2</mybatis-plus.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- mybatis-plus主版本管理  -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <!-- alibaba druid数据源主版本管理  -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
             <!--对于本项目内的模块，版本号全部使用${project.version}指定-->
             <dependency>
                 <groupId>com.imooc2</groupId>
@@ -73,17 +87,6 @@
             <artifactId>swagger-spring-boot-starter</artifactId>
             <version>1.9.0.RELEASE</version>
         </dependency>
-        <!--swagger2-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger2</artifactId>-->
-<!--            <version>2.9.2</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--            <version>2.9.2</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>

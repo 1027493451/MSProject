@@ -59,7 +59,6 @@ public class HystrixController {
         RestTemplate restTemplate = RestTemplateUtil.getInstance("utf-8");
         return restTemplate.postForObject("http://localhost:8085/product/listForOrder",
                 req,
-
                 String.class);
 //        return restTemplate.postForObject("http://localhost:8085/product/listForOrder",
 //                Arrays.asList("1"),
