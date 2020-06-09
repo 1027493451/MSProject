@@ -13,6 +13,7 @@
         <module>order</module>
         <module>user</module>
         <module>auth</module>
+        <module>core-tool</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
