@@ -11,7 +11,6 @@ import com.imooc2.product.product.entity.ProductInfo;
 import com.imooc2.product.product.service.IProductInfoService;
 import com.imooc2.product.utils.ResultVOUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
  */
 @Api(value = "商品接口", tags = "商品管理" )
 @RestController
-@RequestMapping("/product/product-info")
+@RequestMapping("/product")
 public class ProductInfoController {
 
     @Resource
@@ -99,8 +98,9 @@ public class ProductInfoController {
      * @param productIdList
      * @return: java.util.List<com.imooc2.product.dataobject.ProductInfo>
      **/
+
+    //@ApiImplicitParam(paramType = "body", dataType = "List<String>", name = "productIdList", value = "商品列表id", required = true, example = ("['1','2']"))
     @ApiOperation(value = "获取商品列表", notes = "根据商品列表id获取商品列表详细信息",httpMethod = "POST")
-    @ApiImplicitParam(paramType = "path", dataType = "List<String>", name = "productIdList", value = "商品列表id", required = true, example = "{1，2}")
     @PostMapping("/listForOrder")
     public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList) {
         return productService.findList(productIdList);
@@ -114,6 +114,7 @@ public class ProductInfoController {
      * @Version: 1.0
      * @return: void
      **/
+    //@ApiImplicitParam(paramType = "body", dataType = "List<DecreaseStockInput>", name = "decreaseStockInputList",value = "商品扣除输入类", required = true)
     @ApiOperation(value = "扣库存",httpMethod = "POST")
     @PostMapping("/decreaseStock")
     public void decreaseStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList) {

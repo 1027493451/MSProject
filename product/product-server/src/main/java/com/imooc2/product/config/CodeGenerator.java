@@ -52,7 +52,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir") + "/product/product-server";
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("zouxm");
+        gc.setAuthor("Snail");
         gc.setOpen(false);
         gc.setBaseResultMap(true);
         gc.setDateType(DateType.ONLY_DATE);

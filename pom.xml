@@ -32,6 +32,7 @@
         <swagger2.version>2.9.2</swagger2.version>
         <druid.version>1.1.22</druid.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
+        <hutool.version>5.3.4</hutool.version>
     </properties>
 
     <dependencyManagement>

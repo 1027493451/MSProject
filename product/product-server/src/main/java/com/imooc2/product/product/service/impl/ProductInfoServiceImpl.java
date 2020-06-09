@@ -7,8 +7,8 @@ import com.imooc2.product.common.ProductInfoOutput;
 import com.imooc2.product.enums.ProductStatusEnum;
 import com.imooc2.product.enums.ResultEnum;
 import com.imooc2.product.exception.ProductException;
-import com.imooc2.product.product.entity.ProductInfo;
 import com.imooc2.product.product.dao.ProductInfoMapper;
+import com.imooc2.product.product.entity.ProductInfo;
 import com.imooc2.product.product.service.IProductInfoService;
 import com.imooc2.product.utils.JsonUtil;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, ProductInfo> implements IProductInfoService {
 
-    @Resource
+    @Autowired
     private ProductInfoMapper productInfoMapper;
 
     @Autowired
@@ -93,7 +92,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
                 throw new ProductException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
             productInfo.setProductStock(result);
-            productInfoMapper.insert(productInfo);
+            productInfoMapper.updateById(productInfo);
             //productInfoRepository.save(productInfo);
 
             productInfoList.add(productInfo);

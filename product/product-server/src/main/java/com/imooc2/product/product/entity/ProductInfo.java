@@ -3,6 +3,8 @@ package com.imooc2.product.product.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +22,7 @@ public class ProductInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value ="product_id")
     private String productId;
 
     private Integer categoryType;

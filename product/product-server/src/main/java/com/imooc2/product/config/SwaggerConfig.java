@@ -1,7 +1,7 @@
 package com.imooc2.product.config;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -23,7 +23,6 @@ import java.util.ArrayList;
  **/
 @Configuration
 @EnableSwagger2
-@ComponentScan("com.imooc2.product.controller")
 public class SwaggerConfig {
 
     @Bean
@@ -37,8 +36,9 @@ public class SwaggerConfig {
                 .enable(true)
                 .select()
                 //apis： 添加过滤条件,
-                //.apis(RequestHandlerSelectors.basePackage("com.imooc2.product.Atest"))
-                .apis(RequestHandlerSelectors.basePackage("com.imooc2.product.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.imooc2.product.product.controller"))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))//过滤：只显示有@ApiOperation注解的方法
+                //.apis(RequestHandlerSelectors.withMethodAnnotation(ApiImplicitParam.class))//过滤：只显示有@ApiImplicitParam注解的方法
                 //paths： 这里是控制哪些路径的api会被显示出来，比如下方的参数就是除了/user以外的其它路径都会生成api文档
                 .paths(PathSelectors.any())
 //                .paths((String a) ->
@@ -47,15 +47,15 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("sxj", "个人链接：http://xxx.xxx.com/", "邮箱：1027493451@qq.com");
+        Contact contact = new Contact("sxj", "http://www.sxj.com/", "1027493451@qq.com");
         return new ApiInfo(
-                "微服务系统Api接口", // 标题
-                "个人搭建测试", // 描述
-                "2.0", // 版本
-                "链接：http://terms.service.url/", // 组织链接
+                "商品模块Api接口", // 标题
+                "商品的CRBD", // 描述
+                "1.0", // 版本
+                "链接：http://wwww.baidu.com/", //这里配置的是服务网站
                 contact, // 联系人信息
                 "许可：sxj 1.0 ", // 许可
-                "许可链接：www.baidu.com", // 许可连接
+                "许可链接：http://wwww.baidu.com/", // 许可连接
                 new ArrayList<>()// 扩展
         );
     }

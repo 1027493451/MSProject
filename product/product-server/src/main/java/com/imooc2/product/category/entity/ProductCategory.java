@@ -2,6 +2,8 @@ package com.imooc2.product.category.entity;
 
 import java.util.Date;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -19,6 +21,7 @@ public class ProductCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "category_id")
     private Integer categoryId;
 
     private String categoryName;

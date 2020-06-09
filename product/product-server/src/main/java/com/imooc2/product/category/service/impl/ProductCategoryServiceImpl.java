@@ -22,18 +22,11 @@ import java.util.List;
 @Service
 public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMapper, ProductCategory> implements IProductCategoryService {
 
-
-    @Resource
     @Autowired
     private ProductCategoryMapper productCategoryMapper;
 
-
     @Override
     public List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList) {
-        QueryWrapper<ProductCategory> queryWrapper=new QueryWrapper<>();
-        queryWrapper.lambda().in(ProductCategory::getCategoryType,categoryTypeList);
-        return productCategoryMapper.selectList(queryWrapper);
-        //return productCategoryRepository.findByCategoryTypeIn(categoryTypeList);
-        //return null;
+        return productCategoryMapper.selectBatchIds(categoryTypeList);
     }
 }
