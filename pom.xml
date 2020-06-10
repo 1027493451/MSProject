@@ -13,7 +13,7 @@
         <module>order</module>
         <module>user</module>
         <module>auth</module>
-        <module>core-tool</module>
+        <module>common</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -51,16 +51,12 @@
                 <version>${druid.version}</version>
             </dependency>
             <!--对于本项目内的模块，版本号全部使用${project.version}指定-->
-            <dependency>
-                <groupId>com.imooc2</groupId>
-                <artifactId>api-gateway</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.imooc2</groupId>
-                <artifactId>product</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.imooc2</groupId>-->
+<!--                <artifactId>api-gateway</artifactId>-->
+<!--                <version>${project.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
 
             <!--com.alibaba.cloud 系列版本管理-->
             <dependency>
@@ -84,6 +80,11 @@
 
     <!--公共类-->
     <dependencies>
+        <dependency>
+            <groupId>com.imooc2</groupId>
+            <artifactId>common-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.spring4all</groupId>
             <artifactId>swagger-spring-boot-starter</artifactId>

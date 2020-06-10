@@ -3,13 +3,12 @@ package com.imooc2.product.product.controller;
 
 import com.imooc2.product.VO.ProductInfoVO;
 import com.imooc2.product.VO.ProductVO;
-import com.imooc2.product.VO.ResultVO;
 import com.imooc2.product.category.entity.ProductCategory;
 import com.imooc2.product.category.service.IProductCategoryService;
 import com.imooc2.product.common.DecreaseStockInput;
 import com.imooc2.product.product.entity.ProductInfo;
 import com.imooc2.product.product.service.IProductInfoService;
-import com.imooc2.product.utils.ResultVOUtil;
+import com.imooc2.util.api.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
@@ -42,9 +41,9 @@ public class ProductInfoController {
 
     @ApiOperation(value = "获取所有产品",httpMethod = "GET")
     @GetMapping("/getAll")
-    public List<ProductInfo> getUser() {
+    public R<List<ProductInfo>> getUser() {
         List<ProductInfo> list =  productService.list();
-        return list;
+        return R.data(list);
     }
 
     /**
@@ -56,7 +55,8 @@ public class ProductInfoController {
     //@CrossOrigin(allowCredentials = "true")
     @GetMapping("/list")
     @ApiOperation(value = "查询所有在架的商品",httpMethod = "GET")
-    public ResultVO<ProductVO> list() {
+    public R<List<ProductVO>> list() {
+        // public ResultVO<ProductVO> list() {
         //1. 查询所有在架的商品
         List<ProductInfo> productInfoList = productService.list();
 
@@ -86,8 +86,8 @@ public class ProductInfoController {
             productVO.setProductInfoVOList(productInfoVOList);
             productVOList.add(productVO);
         }
-
-        return ResultVOUtil.success(productVOList);
+        return R.data(productVOList);
+        //return ResultVOUtil.success(productVOList);
     }
 
     /**
@@ -96,14 +96,14 @@ public class ProductInfoController {
      * @create: 10:53 2020/6/1
      * @Version: 1.0
      * @param productIdList
-     * @return: java.util.List<com.imooc2.product.dataobject.ProductInfo>
+     * @return: java.util.List<com.imooc2.product.oldProduct.dataobject.ProductInfo>
      **/
 
     //@ApiImplicitParam(paramType = "body", dataType = "List<String>", name = "productIdList", value = "商品列表id", required = true, example = ("['1','2']"))
     @ApiOperation(value = "获取商品列表", notes = "根据商品列表id获取商品列表详细信息",httpMethod = "POST")
     @PostMapping("/listForOrder")
-    public List<ProductInfo> listForOrder(@RequestBody List<String> productIdList) {
-        return productService.findList(productIdList);
+    public R<List<ProductInfo>> listForOrder(@RequestBody List<String> productIdList) {
+        return R.data(productService.findList(productIdList));
     }
 
     /**
@@ -117,7 +117,8 @@ public class ProductInfoController {
     //@ApiImplicitParam(paramType = "body", dataType = "List<DecreaseStockInput>", name = "decreaseStockInputList",value = "商品扣除输入类", required = true)
     @ApiOperation(value = "扣库存",httpMethod = "POST")
     @PostMapping("/decreaseStock")
-    public void decreaseStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList) {
+    public R decreaseStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList) {
         productService.decreaseStock(decreaseStockInputList);
+        return R.success("");
     }
 }
