@@ -2,6 +2,7 @@ package com.imooc2.product.config.druid;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -18,10 +19,11 @@ import org.springframework.context.annotation.PropertySource;
  * @return $
  * @Version 1.0
  **/
+//@MapperScan(basePackages = "com.imooc2.product.**.dao")
 @Configuration
 @PropertySource(value = "classpath:config/druid-monitor.properties")
 @ConfigurationProperties
-class DruidMonitorConfiguration {
+public class DruidMonitorConfiguration {
 
     @Value("${druid.monitor.allow:127.0.0.1}")
     private String allow;

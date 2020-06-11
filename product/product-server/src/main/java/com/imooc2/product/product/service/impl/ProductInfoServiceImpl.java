@@ -54,6 +54,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
 //        }
+        List<ProductInfo> list=productInfoMapper.findList(productIdList);
         return productInfoMapper.selectBatchIds(productIdList);
         //return productInfoRepository.findByProductIdIn(productIdList);
     }

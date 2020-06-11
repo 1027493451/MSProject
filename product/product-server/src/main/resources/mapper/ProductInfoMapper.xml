@@ -16,4 +16,18 @@
         <result column="update_time" property="updateTime" />
     </resultMap>
 
+    <select id="findList" resultMap="BaseResultMap">
+        select * from product_info
+        <where>
+            product_id in <foreach collection="productIdList" item="item" index="index"
+                           open="(" separator="," close=")">#{item}</foreach>
+        </where>
+<!--        SELECT-->
+<!--        <include refid="Base_Column_List" />-->
+<!--        from t_user-->
+<!--        WHERE id IN-->
+<!--        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+    </select>
 </mapper>
