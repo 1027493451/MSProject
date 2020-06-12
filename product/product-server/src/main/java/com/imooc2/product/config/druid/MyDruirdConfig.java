@@ -2,6 +2,7 @@ package com.imooc2.product.config.druid;
 
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -158,7 +159,9 @@ public class MyDruirdConfig implements DbConfig {
     @Primary
     @Override
     public SqlSessionFactory sessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        /**MybatisPlus的MybatisSqlSessionFactoryBean,通过这个类才能使用MybatisPlus的BaseMapper**/
+        //SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        MybatisSqlSessionFactoryBean sessionFactory = new MybatisSqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
