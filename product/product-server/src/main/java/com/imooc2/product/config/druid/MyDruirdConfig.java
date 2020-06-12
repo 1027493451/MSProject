@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 /**
  * @Author snail
- * @Description:
+ * @Description: 配置datasource到ioc容器里面
  * @create: 2020-06-10 16:53
  * @Param $
  * @return $

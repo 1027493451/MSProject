@@ -36,6 +36,9 @@ public class DruidMonitorConfiguration {
     @Value("${druid.monitor.resetEnable:false}")
     private String resetEnable;
 
+    /**
+     * Druid 的数据源状态监控
+     * **/
     @Bean
     public ServletRegistrationBean druidStatViewServlet() {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
@@ -47,6 +50,7 @@ public class DruidMonitorConfiguration {
         return servletRegistrationBean;
     }
 
+    /*Druid对于性能检测的配置*/
     @Bean
     public FilterRegistrationBean druidStatFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());

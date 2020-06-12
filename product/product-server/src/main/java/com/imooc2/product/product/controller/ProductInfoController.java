@@ -1,11 +1,14 @@
 package com.imooc2.product.product.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.imooc2.product.VO.ProductInfoVO;
 import com.imooc2.product.VO.ProductVO;
 import com.imooc2.product.category.entity.ProductCategory;
 import com.imooc2.product.category.service.IProductCategoryService;
 import com.imooc2.product.common.DecreaseStockInput;
+import com.imooc2.product.product.dao.ProductInfoMapper;
 import com.imooc2.product.product.entity.ProductInfo;
 import com.imooc2.product.product.service.IProductInfoService;
 import com.imooc2.util.api.R;
@@ -36,14 +39,19 @@ public class ProductInfoController {
     @Resource
     private IProductCategoryService productCategoryService;
 
+
+    @Autowired
+    private ProductInfoMapper productInfoMapper;
+
     @Autowired
     private IProductInfoService productService;
 
     @ApiOperation(value = "获取所有产品",httpMethod = "GET")
     @GetMapping("/getAll")
-    public R<List<ProductInfo>> getUser() {
+    public R<IPage<ProductInfo>> getUser() {
+        IPage<ProductInfo> productInfoIPage = new Page<>(1, 2);
         List<ProductInfo> list =  productService.list();
-        return R.data(list);
+        return R.data(productInfoMapper.selectPage(productInfoIPage,null));
     }
 
     /**
