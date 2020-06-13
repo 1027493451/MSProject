@@ -47,6 +47,5 @@ management:
 logging:
   level:
     org.springframework.cloud.openfeign: debug
-
-#swagger:
+    com.alibaba.nacos: warn  #调整日志级别关闭nacos心跳日志打印
 #  base-package: com.imooc2.product.oldProduct.controller
