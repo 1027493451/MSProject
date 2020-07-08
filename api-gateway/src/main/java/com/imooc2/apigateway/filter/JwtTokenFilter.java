@@ -3,7 +3,6 @@ package com.imooc2.apigateway.filter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imooc2.apigateway.VO.ResultVO;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -73,27 +71,28 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
             return authErro(resp, "请登陆");
         } else {
             //有token
-            try {
+//            try {
 //                if(token.equals("123")){
 //                    return chain.filter(exchange);
 //                }
-                ServerHttpRequest req = exchange.getRequest().mutate()
-                        .header("from", "gateway").build();
-                return chain.filter(exchange.mutate().request(req.mutate().build()).build());
-                //return chain.filter(exchange);
-                //jwtUtil.checkToken(token,objectMapper);
-                //return chain.filter(exchange);
-            } catch (ExpiredJwtException e) {
-                log.error(e.getMessage(), e);
-                if (e.getMessage().contains("Allowed clock skew")) {
-                    return authErro(resp, "认证过期");
-                } else {
-                    return authErro(resp, "认证失败");
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                return authErro(resp, "认证失败");
-            }
+//                ServerHttpRequest req = exchange.getRequest().mutate()
+//                        .header("from", "gateway").build();
+//                return chain.filter(exchange.mutate().request(req.mutate().build()).build());
+//                //return chain.filter(exchange);
+//                //jwtUtil.checkToken(token,objectMapper);
+//                //return chain.filter(exchange);
+//            } catch (ExpiredJwtException e) {
+//                log.error(e.getMessage(), e);
+//                if (e.getMessage().contains("Allowed clock skew")) {
+//                    return authErro(resp, "认证过期");
+//                } else {
+//                    return authErro(resp, "认证失败");
+//                }
+//            } catch (Exception e) {
+//                log.error(e.getMessage(), e);
+//                return authErro(resp, "认证失败");
+//            }
+            return chain.filter(exchange);
         }
     }
 
