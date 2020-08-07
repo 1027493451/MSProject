@@ -15,6 +15,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -56,7 +57,11 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String url = exchange.getRequest().getURI().getPath();
+        AntPathMatcher pathMatcher = new AntPathMatcher();
 
+        if (pathMatcher.match("/auth/**", url)) {
+            return chain.filter(exchange);
+        }
         //跳过不需要验证的路径
         if (null != skipAuthUrls && Arrays.asList(skipAuthUrls).contains(url)) {
             return chain.filter(exchange);
@@ -70,6 +75,7 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
             //没有token
             return authErro(resp, "请登陆");
         } else {
+            //todo 1。调用auth服务验证token，2。增加其他模块过滤认证标示，表示借口是经过网关访问的
             //有token
 //            try {
 //                if(token.equals("123")){

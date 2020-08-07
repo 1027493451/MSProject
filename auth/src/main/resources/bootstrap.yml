@@ -11,9 +11,12 @@ spring:
         server-addr: 127.0.0.1:8848
       discovery:
         server-addr: 127.0.0.1:8848
-
+  redis: #redis相关配置
+    host: localhost
+    port: 6379
 server:
   port: 3000
+
 
 org:
   my:

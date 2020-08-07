@@ -38,12 +38,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserService userService;
 
+
     @Autowired
-//    @Qualifier("redisTokenStore")
-    @Qualifier("jwtTokenStore")
+    @Qualifier("redisTokenStore")
+    //@Qualifier(value = "jwtTokenStore")
     private TokenStore tokenStore;
+
     @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
+
     @Autowired
     private JwtTokenEnhancer jwtTokenEnhancer;
 
@@ -62,20 +65,33 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .tokenStore(tokenStore) //配置令牌存储策略
                 .accessTokenConverter(jwtAccessTokenConverter)
                 .tokenEnhancer(enhancerChain);
+
+//        endpoints.authenticationManager(authenticationManager)
+//                .userDetailsService(userService)
+//                .tokenStore(tokenStore) //配置令牌存储策略
+//                .accessTokenConverter(jwtAccessTokenConverter);
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
+//                .withClient("admin")//配置client_id
+//                .secret(passwordEncoder.encode("admin123456"))//配置client_secret
+//                .accessTokenValiditySeconds(3600)//配置访问token的有效期
+//                .refreshTokenValiditySeconds(864000)//配置刷新token的有效期
+//                .redirectUris("http://www.baidu.com")//配置redirect_uri，用于授权成功后跳转
+//                .scopes("all")//配置申请的权限范围
+//                .authorizedGrantTypes("authorization_code","password", "refresh_token");//配置grant_type，表示授权类型
+
                 .withClient("admin")
-                .secret(passwordEncoder.encode("admin123456"))
-                .accessTokenValiditySeconds(3600)
-                .refreshTokenValiditySeconds(864000)
-//                .redirectUris("http://www.baidu.com")
+                .secret(passwordEncoder.encode("admin123456"))//配置client_secret
+                .accessTokenValiditySeconds(3600)//配置访问token的有效期
+                .refreshTokenValiditySeconds(864000)//配置刷新token的有效期
+//                .redirectUris("http://www.baidu.com")//配置redirect_uri，用于授权成功后跳转
                 .redirectUris("http://localhost:9501/login") //单点登录时配置
                 .autoApprove(true) //自动授权配置
                 .scopes("all")
-                .authorizedGrantTypes("authorization_code", "password", "refresh_token");
+                .authorizedGrantTypes("authorization_code", "password", "refresh_token"); //配置grant_type，表示授权类型
     }
 
     @Override
