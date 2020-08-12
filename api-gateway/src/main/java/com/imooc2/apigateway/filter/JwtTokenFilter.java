@@ -1,19 +1,26 @@
 package com.imooc2.apigateway.filter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imooc2.apigateway.VO.ResultVO;
-import lombok.Getter;
-import lombok.Setter;
+import com.imooc2.apigateway.util.EncryptUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
@@ -22,6 +29,8 @@ import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author snail
@@ -34,14 +43,16 @@ import java.util.Arrays;
 @Component
 //读取 yml 文件下的 org.my.jwt
 @ConfigurationProperties("org.my.jwt")
-@Setter
-@Getter
+@Data
 @Slf4j
 public class JwtTokenFilter implements GlobalFilter, Ordered {
 
     private String[] skipAuthUrls;
 
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private TokenStore tokenStore;
 
     public JwtTokenFilter(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -71,34 +82,29 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
         String token = exchange.getRequest().getHeaders().getFirst("Authorization");
         ServerHttpResponse resp = exchange.getResponse();
         if (StringUtils.isBlank(token)) {
-
             //没有token
             return authErro(resp, "请登陆");
         } else {
-            //todo 1。调用auth服务验证token，2。增加其他模块过滤认证标示，表示借口是经过网关访问的
-            //有token
-//            try {
-//                if(token.equals("123")){
-//                    return chain.filter(exchange);
-//                }
-//                ServerHttpRequest req = exchange.getRequest().mutate()
-//                        .header("from", "gateway").build();
-//                return chain.filter(exchange.mutate().request(req.mutate().build()).build());
-//                //return chain.filter(exchange);
-//                //jwtUtil.checkToken(token,objectMapper);
-//                //return chain.filter(exchange);
-//            } catch (ExpiredJwtException e) {
-//                log.error(e.getMessage(), e);
-//                if (e.getMessage().contains("Allowed clock skew")) {
-//                    return authErro(resp, "认证过期");
-//                } else {
-//                    return authErro(resp, "认证失败");
-//                }
-//            } catch (Exception e) {
-//                log.error(e.getMessage(), e);
-//                return authErro(resp, "认证失败");
-//            }
-            return chain.filter(exchange);
+            OAuth2AccessToken oAuth2AccessToken;
+            try {
+                oAuth2AccessToken = tokenStore.readAccessToken(token);
+                Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
+                //取出用户身份信息
+                String principal = MapUtils.getString(additionalInformation, "user_name");
+                //获取用户权限
+                List<String> authorities = (List<String>) additionalInformation.get("authorities");
+                JSONObject jsonObject=new JSONObject();
+                jsonObject.put("principal",principal);
+                jsonObject.put("authorities",authorities);
+                //给header里面添加值
+                String base64 = EncryptUtil.encodeUTF8StringBase64(jsonObject.toJSONString());
+                ServerHttpRequest tokenRequest = exchange.getRequest().mutate().header("json-token", base64).header("from", "gateway").build();
+                ServerWebExchange build = exchange.mutate().request(tokenRequest).build();
+                return chain.filter(build);//跳到下一个过滤器
+            } catch (InvalidTokenException e) {
+                log.info("无效的token: {}", token);
+                return authErro(resp, "无效的token");
+            }
         }
     }
 

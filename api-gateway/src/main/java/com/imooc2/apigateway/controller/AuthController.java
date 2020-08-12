@@ -28,7 +28,7 @@ import java.util.ArrayList;
 //@ApiComment(seeClass = AuthController.class)
 @RestController
 @Slf4j
-@RequestMapping("/auth")
+@RequestMapping("/test")
 public class AuthController {
     private ObjectMapper objectMapper;
 

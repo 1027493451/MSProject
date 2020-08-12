@@ -16,6 +16,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 public class JwtTokenStoreConfig {
 
+    /**
+     * 秘钥串
+     */
+    private static final String SIGNING_KEY = "auth";
+
     @Bean
     @Primary
     public TokenStore jwtTokenStore() {
@@ -25,7 +30,7 @@ public class JwtTokenStoreConfig {
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
-        accessTokenConverter.setSigningKey("test_key");//配置JWT使用的秘钥
+        accessTokenConverter.setSigningKey(SIGNING_KEY);//配置JWT使用的秘钥
         return accessTokenConverter;
     }
 

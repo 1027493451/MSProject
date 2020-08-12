@@ -40,8 +40,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 
     @Autowired
-    @Qualifier("redisTokenStore")
-    //@Qualifier(value = "jwtTokenStore")
+    //@Qualifier("redisTokenStore")
+    @Qualifier(value = "jwtTokenStore")
     private TokenStore tokenStore;
 
     @Autowired
