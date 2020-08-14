@@ -77,9 +77,8 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
         if (null != skipAuthUrls && Arrays.asList(skipAuthUrls).contains(url)) {
             return chain.filter(exchange);
         }
-
-        //获取token
-        String token = exchange.getRequest().getHeaders().getFirst("Authorization");
+        //2 从request获取token
+        String token = getToken(exchange);
         ServerHttpResponse resp = exchange.getResponse();
         if (StringUtils.isBlank(token)) {
             //没有token
@@ -132,6 +131,22 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
     @Override
     public int getOrder() {
         return -100;
+    }
+
+    /**
+     * 从request获取token
+     */
+    private String getToken(ServerWebExchange exchange) {
+        //获取token
+        String tokenStr = exchange.getRequest().getHeaders().getFirst("Authorization");
+        if (StringUtils.isBlank(tokenStr)) {
+            return null;
+        }
+        String token = tokenStr.split(" ")[1];
+        if (StringUtils.isBlank(token)) {
+            return null;
+        }
+        return token;
     }
 }
 

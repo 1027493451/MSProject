@@ -2,10 +2,12 @@ package com.imooc2.auth.config;
 
 
 import com.imooc2.auth.component.JwtTokenEnhancer;
+import com.imooc2.auth.exception.WebResponseTranslator;
 import com.imooc2.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -13,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -38,7 +41,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private UserService userService;
 
-
     @Autowired
     //@Qualifier("redisTokenStore")
     @Qualifier(value = "jwtTokenStore")
@@ -50,8 +52,27 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private JwtTokenEnhancer jwtTokenEnhancer;
 
+//    @Autowired(required = true)
+//    private AuthorizationCodeServices authorizationCodeServices;
+
+
+    @Autowired
+    private AuthorizationServerTokenServices tokenService;
+
+//    @Autowired
+//    @Qualifier("myClientDetailsService")
+//    private ClientDetailsService clientService;
+//
+//    @Bean("myClientDetailsService")
+//    public ClientDetailsService clientDetailsService(DataSource dataSource, PasswordEncoder passwordEncoder) {
+//        JdbcClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+//        clientDetailsService.setPasswordEncoder(passwordEncoder);
+//        return clientDetailsService;
+//    }
+
     /**
      * 使用密码模式需要配置
+     * 令牌访问端点
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
@@ -60,18 +81,27 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         delegates.add(jwtTokenEnhancer); //配置JWT的内容增强器
         delegates.add(jwtAccessTokenConverter);
         enhancerChain.setTokenEnhancers(delegates);
-        endpoints.authenticationManager(authenticationManager)
-                .userDetailsService(userService)
-                .tokenStore(tokenStore) //配置令牌存储策略
-                .accessTokenConverter(jwtAccessTokenConverter)
-                .tokenEnhancer(enhancerChain);
-
 //        endpoints.authenticationManager(authenticationManager)
 //                .userDetailsService(userService)
 //                .tokenStore(tokenStore) //配置令牌存储策略
-//                .accessTokenConverter(jwtAccessTokenConverter);
+//                .accessTokenConverter(jwtAccessTokenConverter)
+//                .tokenEnhancer(enhancerChain);
+
+        endpoints.authenticationManager(authenticationManager)
+                .tokenServices(tokenService)
+                .userDetailsService(userService)
+                .tokenStore(tokenStore) //配置令牌存储策略
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST)
+                .exceptionTranslator(new WebResponseTranslator())
+                .accessTokenConverter(jwtAccessTokenConverter)
+                .tokenEnhancer(enhancerChain);
+
+
     }
 
+    /**
+     * 配置客户端详细信息服务
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -94,8 +124,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authorizedGrantTypes("authorization_code", "password", "refresh_token"); //配置grant_type，表示授权类型
     }
 
+
+
+    /**
+     * 令牌访问端点安全策略
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
-        security.tokenKeyAccess("isAuthenticated()"); // 获取密钥需要身份认证，使用单点登录时必须配置
+        security
+                .tokenKeyAccess("permitAll()")
+                .checkTokenAccess("permitAll()")
+                .allowFormAuthenticationForClients();
+        //security.tokenKeyAccess("isAuthenticated()"); // 获取密钥需要身份认证，使用单点登录时必须配置
     }
 }

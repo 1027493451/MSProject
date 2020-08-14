@@ -5,9 +5,15 @@ import com.imooc2.auth.component.JwtTokenEnhancer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import java.util.Collections;
 
 /**
  * 使用Jwt存储token的配置
@@ -38,4 +44,30 @@ public class JwtTokenStoreConfig {
     public JwtTokenEnhancer jwtTokenEnhancer() {
         return new JwtTokenEnhancer();
     }
+
+
+    /**
+     * 配置令牌管理
+     */
+    @Bean
+    public AuthorizationServerTokenServices tokenService(ClientDetailsService clientDetailsService, TokenStore tokenStore
+            , JwtAccessTokenConverter accessTokenConverter) {
+        DefaultTokenServices service = new DefaultTokenServices();
+        service.setClientDetailsService(clientDetailsService);
+        service.setSupportRefreshToken(true);
+        service.setTokenStore(tokenStore);
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Collections.singletonList(accessTokenConverter));
+        service.setTokenEnhancer(tokenEnhancerChain);
+        return service;
+    }
+
+    /**
+     * 授权码存储方式
+     */
+//
+//    @Bean
+//    public AuthorizationCodeServices authorizationCodeServices(DataSource dataSource) {
+//        return new JdbcAuthorizationCodeServices(dataSource);
+//    }
 }
