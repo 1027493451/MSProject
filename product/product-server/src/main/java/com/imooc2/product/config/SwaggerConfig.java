@@ -1,24 +1,25 @@
 package com.imooc2.product.config;
 
 import io.swagger.annotations.ApiOperation;
+import org.assertj.core.util.Lists;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * @Author snail
+ * @Author Snail
  * @Description:
  * @create: 2020-05-29 15:08
- * @Param $
- * @return $
  * @Version 1.0
  **/
 @Configuration
@@ -43,7 +44,9 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
 //                .paths((String a) ->
 //                        !a.equals("/user"))
-                .build();
+                //securitySchemes是Basic认证属性，value框输入Bearer+空格+你通过oauth2获取的accessToken，即可完成认证
+                .build().securitySchemes(Lists.newArrayList(apiKey()))
+                .securityContexts(Arrays.asList(securityContext()));
     }
 
     private ApiInfo apiInfo() {
@@ -58,6 +61,24 @@ public class SwaggerConfig {
                 "许可链接：http://wwww.baidu.com/", // 许可连接
                 new ArrayList<>()// 扩展
         );
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("Bearer", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder().securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any()).build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope(
+                "global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("Bearer",
+                authorizationScopes));
     }
 
 }

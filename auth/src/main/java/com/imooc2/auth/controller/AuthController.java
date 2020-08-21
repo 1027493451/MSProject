@@ -1,16 +1,16 @@
 package com.imooc2.auth.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.imooc2.auth.VO.ResultVO;
-import com.imooc2.auth.dto.UserDTO;
-import com.imooc2.auth.model.JwtModel;
-import com.imooc2.auth.util.JwtUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
+import java.security.Principal;
+
 
 //import com.terran4j.commons.api2doc.annotations.Api2Doc;
 //import com.terran4j.commons.api2doc.annotations.ApiComment;
@@ -25,62 +25,28 @@ import java.util.ArrayList;
  **/
 //@Api2Doc(id = "auth", name = "权限接口")
 //@ApiComment(seeClass = AuthController.class)
+@Api(value = "用户接口服务", description = "用户接口服务")
 @RestController
 @Slf4j
 @RequestMapping("/auth")
 public class AuthController {
-    private ObjectMapper objectMapper;
 
-    @Value("${org.my.jwt.effective-time}")
-    private String effectiveTime;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public AuthController(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
+//    @Value("${org.my.jwt.effective-time}")
+//    private String effectiveTime;
+//
+//    @GetMapping("/msg")
+//    public String msg(){
+//        return "msg";
+//    }
+
+    @ApiOperation(value = "查询通过 OAuth2.0 授权后获取的用户信息", notes = "通过 OAuth2.0 授权后获取的用户信息")
+    @GetMapping("/principal")
+    public Principal principal(Principal principal)
+    {
+        return principal;
     }
 
-    @GetMapping("/msg")
-    public String msg(){
-        return "msg";
-    }
 
-    /**
-     * 登陆认证接口
-     *
-     * @param userDTO
-     * @return
-     */
-    //@ApiComment("登陆认证接口")
-    @PostMapping("/login")
-    public ResultVO<String> login(@RequestBody UserDTO userDTO) throws Exception {
-        ArrayList<String> roleIdList = new ArrayList<>(1);
-        roleIdList.add("role_test_1");
-        JwtModel jwtModel = new JwtModel("test", roleIdList);
-        int effectivTimeInt = Integer.valueOf(effectiveTime.substring(0, effectiveTime.length() - 1));
-        String effectivTimeUnit = effectiveTime.substring(effectiveTime.length() - 1, effectiveTime.length());
-        String jwt = null;
-        switch (effectivTimeUnit) {
-            case "s": {
-                //秒
-                jwt = JwtUtil.createJWT("test", "test", objectMapper.writeValueAsString(jwtModel), effectivTimeInt * 1000L);
-                break;
-            }
-            case "m": {
-                //分钟
-                jwt = JwtUtil.createJWT("test", "test", objectMapper.writeValueAsString(jwtModel), effectivTimeInt * 60L * 1000L);
-                break;
-            }
-            case "h": {
-                //小时
-                jwt = JwtUtil.createJWT("test", "test", objectMapper.writeValueAsString(jwtModel), effectivTimeInt * 60L * 60L * 1000L);
-                break;
-            }
-            case "d": {
-                //小时
-                jwt = JwtUtil.createJWT("test", "test", objectMapper.writeValueAsString(jwtModel), effectivTimeInt * 24L * 60L * 60L * 1000L);
-                break;
-            }
-        }
-
-        return new ResultVO<String>(HttpStatus.OK.value(), "认证成功", jwt);
-    }
 }

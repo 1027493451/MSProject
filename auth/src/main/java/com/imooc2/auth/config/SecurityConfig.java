@@ -13,10 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 /**
- * SpringSecurity配置
- * Created by macro on 2019/10/8.
- */
+ * @ClassName SecurityConfig
+ * @Description:
+ * @Author: suxijiang
+ * @Date: 5:40 下午 2020/8/19
+ * @Version: 1.0
+**/
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -35,11 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
