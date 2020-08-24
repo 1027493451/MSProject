@@ -31,3 +31,4 @@ build/
 .vscode/
 
 /Logs_Info/
+/api-gateway/src/main/resources/Logs_Info/gateway/
