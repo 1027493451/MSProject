@@ -30,6 +30,4 @@ build/
 ### VS Code ###
 .vscode/
 
-
-/D:/Logs/gateway/**
-/D:/
+/Logs_Info/
