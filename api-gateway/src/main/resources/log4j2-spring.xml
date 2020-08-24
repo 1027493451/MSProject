@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN" monitorInterval="1800">
     <properties>
-        <property name="LOG_HOME">./Logs_Info/gateway</property>
+        <property name="LOG_HOME">../Logs_Info/gateway</property>
         <property name="REQUEST_FILE_NAME">request</property>
         <property name="INFO_FILE_NAME">info</property>
     </properties>
