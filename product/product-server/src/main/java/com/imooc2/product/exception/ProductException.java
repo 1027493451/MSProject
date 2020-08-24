@@ -4,9 +4,12 @@ package com.imooc2.product.exception;
 import com.imooc2.product.enums.ResultEnum;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 22:59
- */
+ * @ClassName ProductException
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:07 上午 2020/8/25
+ * @Version: 1.0
+**/
 public class ProductException extends RuntimeException {
 
     private Integer code;

@@ -3,10 +3,12 @@ package com.imooc2.product.enums;
 import lombok.Getter;
 
 /**
- * 商品上下架状态
- * Created by 廖师兄
- * 2017-12-09 22:00
- */
+ * @ClassName ProductStatusEnum
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:06 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Getter
 public enum ProductStatusEnum {
     UP(0, "在架"),

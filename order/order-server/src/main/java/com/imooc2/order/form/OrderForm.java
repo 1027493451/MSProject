@@ -5,9 +5,12 @@ import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 17:21
- */
+ * @ClassName OrderForm
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:06 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Data
 public class OrderForm {
 

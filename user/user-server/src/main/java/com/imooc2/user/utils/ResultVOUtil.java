@@ -4,9 +4,12 @@ import com.imooc2.user.VO.ResultVO;
 import com.imooc2.user.enums.ResultEnum;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 18:03
- */
+ * @ClassName ResultVOUtil
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:07 上午 2020/8/25
+ * @Version: 1.0
+**/
 public class ResultVOUtil {
 
     public static ResultVO success(Object object) {

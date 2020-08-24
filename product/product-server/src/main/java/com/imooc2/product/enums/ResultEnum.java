@@ -3,9 +3,12 @@ package com.imooc2.product.enums;
 import lombok.Getter;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 23:00
- */
+ * @ClassName ResultEnum
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:06 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Getter
 public enum ResultEnum {
 

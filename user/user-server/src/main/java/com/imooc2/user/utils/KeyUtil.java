@@ -3,9 +3,12 @@ package com.imooc2.user.utils;
 import java.util.Random;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 16:57
- */
+ * @ClassName KeyUtil
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:07 上午 2020/8/25
+ * @Version: 1.0
+**/
 public class KeyUtil {
 
     /**

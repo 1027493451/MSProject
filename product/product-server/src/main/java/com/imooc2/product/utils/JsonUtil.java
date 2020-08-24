@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Created by 廖师兄
- * 2018-02-21 10:40
- */
+ * @ClassName JsonUtil
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:07 上午 2020/8/25
+ * @Version: 1.0
+**/
 public class JsonUtil {
 
     private static ObjectMapper objectMapper = new ObjectMapper();

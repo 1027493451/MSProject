@@ -4,9 +4,12 @@ package com.imooc2.product.utils;
 import com.imooc2.product.VO.ResultVO;
 
 /**
- * Created by 廖师兄
- * 2017-12-09 22:53
- */
+ * @ClassName ResultVOUtil
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:07 上午 2020/8/25
+ * @Version: 1.0
+**/
 public class ResultVOUtil {
 
     public static ResultVO success(Object object) {

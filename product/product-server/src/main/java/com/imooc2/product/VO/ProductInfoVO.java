@@ -6,9 +6,12 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * Created by 廖师兄
- * 2017-12-09 22:14
- */
+ * @ClassName ProductInfoVO
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:06 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Data
 public class ProductInfoVO {
 

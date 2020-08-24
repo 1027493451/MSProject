@@ -3,9 +3,12 @@ package com.imooc2.order.dto;
 import lombok.Data;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 22:36
- */
+ * @ClassName CartDTO
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:05 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Data
 public class CartDTO {
     /**
