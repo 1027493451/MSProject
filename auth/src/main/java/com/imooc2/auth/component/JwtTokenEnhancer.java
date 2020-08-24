@@ -9,9 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Jwt内容增强器
- * Created by macro on 2019/10/8.
- */
+ * @ClassName JwtTokenEnhancer
+ * @Description: Jwt内容增强器
+ * @Author: Snail
+ * @Date: 12:22 下午 2020/8/24
+ * @Version: 1.0
+**/
 public class JwtTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {

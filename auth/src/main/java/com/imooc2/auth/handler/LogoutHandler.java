@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * @ClassName LogoutHandler
  * @Description:
- * @Author: zhurongsheng
- * @Date: 2020/7/18 19:13
- */
+ * @Author: Snail
+ * @Date: 12:25 下午 2020/8/24
+ * @Version: 1.0
+**/
 @Configuration
 public class LogoutHandler implements LogoutSuccessHandler {
     @Override

@@ -8,9 +8,12 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 /**
- * 使用redis存储token的配置
- * Created by macro on 2019/10/8.
- */
+ * @ClassName RedisTokenStoreConfig
+ * @Description: 使用redis存储token的配置
+ * @Author: Snail
+ * @Date: 12:21 下午 2020/8/24
+ * @Version: 1.0
+**/
 @Configuration
 public class RedisTokenStoreConfig {
 

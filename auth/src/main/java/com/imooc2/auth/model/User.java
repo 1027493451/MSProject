@@ -7,8 +7,12 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by macro on 2019/8/29.
- */
+ * @ClassName User
+ * @Description:
+ * @Author: Snail
+ * @Date: 2:18 下午 2020/8/24
+ * @Version: 1.0
+**/
 public class User implements UserDetails {
 
     private String username;

@@ -6,9 +6,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 /**
- * 资源服务器配置
- * Created by macro on 2019/9/30.
- */
+ * @ClassName ResourceServerConfig
+ * @Description: 资源服务器配置
+ * @Author: Snail
+ * @Date: 12:21 下午 2020/8/24
+ * @Version: 1.0
+**/
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {

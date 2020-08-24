@@ -9,10 +9,12 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
+ * @ClassName CustomOauthExceptionSerializer
  * @Description:
- * @Author: zhurongsheng
- * @Date: 2020/7/22 00:28
- */
+ * @Author: Snail
+ * @Date: 12:24 下午 2020/8/24
+ * @Version: 1.0
+**/
 public class CustomOauthExceptionSerializer extends StdSerializer<CustomOauthException> {
     public CustomOauthExceptionSerializer() {
         super(CustomOauthException.class);

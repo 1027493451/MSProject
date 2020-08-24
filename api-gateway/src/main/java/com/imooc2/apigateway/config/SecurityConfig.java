@@ -7,7 +7,7 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 /**
- * @Description:
+ * @Description: 网关的security做权限认证
  * @Author: snail
  * @Date: 2020/7/18 13:21
  */
@@ -19,9 +19,14 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange()
+                .pathMatchers("/user/**").hasRole("ADMIN")
                 .pathMatchers("/**").permitAll()
-                .anyExchange().authenticated()
-                .and().csrf().disable().build();
+                .anyExchange()
+                .authenticated()
+                .and()
+                .csrf()
+                .disable()
+                .build();
     }
 
 

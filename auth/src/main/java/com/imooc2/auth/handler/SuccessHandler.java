@@ -14,10 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * @ClassName SuccessHandler
  * @Description:
- * @Author: zhurongsheng
- * @Date: 2020/7/18 19:09
- */
+ * @Author: Snail
+ * @Date: 12:25 下午 2020/8/24
+ * @Version: 1.0
+**/
 @Slf4j
 @Configuration
 public class SuccessHandler implements AuthenticationSuccessHandler {

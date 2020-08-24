@@ -16,6 +16,13 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @ClassName RouteController
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:03 上午 2020/8/25
+ * @Version: 1.0
+**/
 @RestController
 @RequestMapping("/route")
 @RefreshScope

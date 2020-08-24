@@ -16,8 +16,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by macro on 2019/9/30.
- */
+ * @ClassName UserService
+ * @Description:
+ * @Author: Snail
+ * @Date: 3:03 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Service
 public class UserService implements UserDetailsService {
     private List<User> userList;

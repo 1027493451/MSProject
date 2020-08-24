@@ -11,9 +11,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * 加密工具类
- * @Author: rosh
- */
+ * @ClassName EncryptUtil
+ * @Description: 加密工具类
+ * @Author: Snail
+ * @Date: 3:03 上午 2020/8/25
+ * @Version: 1.0
+**/
 public final class EncryptUtil {
 
     private EncryptUtil() {

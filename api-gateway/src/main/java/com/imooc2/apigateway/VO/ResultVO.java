@@ -3,10 +3,12 @@ package com.imooc2.apigateway.VO;
 import lombok.Data;
 
 /**
- * http请求返回的最外层对象
- * Created by 廖师兄
- * 2017-12-09 22:09
- */
+ * @ClassName ResultVO
+ * @Description: http请求返回的最外层对象
+ * @Author: Snail
+ * @Date: 3:04 上午 2020/8/25
+ * @Version: 1.0
+**/
 @Data
 public class ResultVO<T> {
 

@@ -25,9 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 认证服务器配置
- * Created by macro on 2019/9/30.
- */
+ * @ClassName AuthorizationServerConfig
+ * @Description: 认证服务器配置
+ * @Author: Snail
+ * @Date: 12:22 下午 2020/8/24
+ * @Version: 1.0
+**/
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {

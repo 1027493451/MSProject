@@ -8,8 +8,12 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 
 
 /**
- * @author zrs
- */
+ * @ClassName WebResponseTranslator
+ * @Description:
+ * @Author: Snail
+ * @Date: 12:24 下午 2020/8/24
+ * @Version: 1.0
+**/
 public class WebResponseTranslator implements WebResponseExceptionTranslator {
 
     @Override

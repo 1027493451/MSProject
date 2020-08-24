@@ -2,6 +2,7 @@ package com.imooc2.auth.controller;
 
 import cn.hutool.core.util.StrUtil;
 import io.jsonwebtoken.Jwts;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Created by macro on 2019/9/30.
- */
+ * @ClassName UserController
+ * @Description:
+ * @Author: Snail
+ * @Date: 12:24 下午 2020/8/24
+ * @Version: 1.0
+**/
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -24,6 +29,12 @@ public class UserController {
                 .setSigningKey("test_key".getBytes(StandardCharsets.UTF_8))
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    @PreAuthorize("hasAuthority('admin')")
+    @GetMapping("/auth/admin")
+    public Object adminAuth() {
+        return "Has admin auth!";
     }
 
 }
