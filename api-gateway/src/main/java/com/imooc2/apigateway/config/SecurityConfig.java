@@ -20,6 +20,8 @@ public class SecurityConfig {
     public SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange()
                 .pathMatchers("/user/**").hasRole("ADMIN")
+                .pathMatchers("/order/**").hasRole("USER")
+                .pathMatchers("/product/**").hasRole("USER")
                 .pathMatchers("/**").permitAll()
                 .anyExchange()
                 .authenticated()

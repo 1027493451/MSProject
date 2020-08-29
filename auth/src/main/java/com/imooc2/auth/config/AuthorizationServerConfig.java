@@ -73,9 +73,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //        return clientDetailsService;
 //    }
 
+    //把自己设置的jwt签名加入accessTokenConverter中
+//    @Bean
+//    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+//        JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+//        jwtAccessTokenConverter.setSigningKey("123");//对称加密,资源服务器需要和这个一致
+//        return jwtAccessTokenConverter;
+//    }
+
     /**
      * 使用密码模式需要配置
      * 令牌访问端点
+     * 对令牌的增强操作就在enhance方法中
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
@@ -108,14 +117,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-//                .withClient("admin")//配置client_id
-//                .secret(passwordEncoder.encode("admin123456"))//配置client_secret
-//                .accessTokenValiditySeconds(3600)//配置访问token的有效期
-//                .refreshTokenValiditySeconds(864000)//配置刷新token的有效期
-//                .redirectUris("http://www.baidu.com")//配置redirect_uri，用于授权成功后跳转
-//                .scopes("all")//配置申请的权限范围
-//                .authorizedGrantTypes("authorization_code","password", "refresh_token");//配置grant_type，表示授权类型
-
                 .withClient("admin")
                 .secret(passwordEncoder.encode("admin123456"))//配置client_secret
                 .accessTokenValiditySeconds(3600)//配置访问token的有效期
@@ -123,7 +124,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //                .redirectUris("http://www.baidu.com")//配置redirect_uri，用于授权成功后跳转
                 .redirectUris("http://localhost:9501/login") //单点登录时配置
                 .autoApprove(true) //自动授权配置
-                .scopes("all")
+                .scopes("all")//配置申请的权限范围
                 .authorizedGrantTypes("authorization_code", "password", "refresh_token"); //配置grant_type，表示授权类型
     }
 

@@ -47,6 +47,4 @@ public class AuthController {
     {
         return principal;
     }
-
-
 }

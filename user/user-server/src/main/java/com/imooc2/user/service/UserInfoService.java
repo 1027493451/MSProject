@@ -19,4 +19,5 @@ public interface UserInfoService {
      * @return: com.imooc.user.dataobject.UserInfo
      **/
     UserInfo findByOpenid(String openid);
+
 }

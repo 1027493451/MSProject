@@ -11,6 +11,16 @@
     <artifactId>auth</artifactId>
     <name>${project.artifactId}</name>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.imooc2</groupId>
+                <artifactId>user-server</artifactId>
+                <version>${demo.project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -81,6 +91,12 @@
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+<!--  引入其他模块      -->
+        <!--引入用户模块-->
+        <dependency>
+            <groupId>com.imooc2</groupId>
+            <artifactId>user-server</artifactId>
         </dependency>
     </dependencies>
 

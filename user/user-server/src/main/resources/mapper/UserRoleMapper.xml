@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc2.user.userRoleRelation.dao.UserRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.imooc2.user.userRoleRelation.entity.UserRole">
+        <id column="tur_id" property="turId" />
+        <result column="tu_id" property="tuId" />
+        <result column="tr_id" property="trId" />
+    </resultMap>
+</mapper>
