@@ -1,0 +1,92 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors‐configurations:
+          '[/**]': # 匹配所有请求
+            allowedOrigins: "*" #跨域处理 允许所有的域
+            allowedMethods: # 支持的方法
+              - GET
+              - POST
+              - PUT
+              - DELETE
+      routes:
+        - id: ${imooc.service.imooc-product}
+          uri: lb://${imooc.service.imooc-product}
+          predicates:
+            - Path=/${imooc.service.imooc-product}/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                # 使用SpEL按名称引用bean
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                # 允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 10
+                # 允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 20
+            - StripPrefix=1
+        - id: ${imooc.service.imooc-order}
+          uri: lb://${imooc.service.imooc-order}
+          predicates:
+            - Path=/${imooc.service.imooc-order}/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                # 使用SpEL按名称引用bean
+                key-resolver: '#{@remoteAddrKeyResolver}'
+                # 允许用户每秒处理多少个请求
+                redis-rate-limiter.replenishRate: 10
+                # 允许在一秒钟内完成的最大请求数
+                redis-rate-limiter.burstCapacity: 20
+            - StripPrefix=1
+
+#开启端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  security:
+    enabled: false
+
+# 需要配置的服务名
+imooc:
+  service:
+    imooc-product: product
+    imooc-order: order
+    imooc-user: user
+
+
+server:
+  port: 9000
+
+nacos:
+  dataId: gateway_config_json
+  group: refresh_config_json
+
+#logger
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+
+org:
+  my:
+    jwt:
+      #跳过认证的路由
+      skip-auth-urls:
+        - /product/swagger-ui.html
+        - /product/v2/api-docs
+        - /swagger-ui.html
+        - http://localhost:9000/swagger-ui.html
+        - /swagger-resources
+        - /v2/api-docs
+        - /swagger-resources/**
+        - /csrf
+      ############################################
+      #   有效时长
+      #     单位：d:天、h:小时、m:分钟、s:秒
+      ###########################################
+      effective-time: 1m

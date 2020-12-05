@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc2.user.role.dao.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.imooc2.user.role.entity.Role">
+        <id column="tu_id" property="trId" />
+        <result column="role_name" property="roleName" />
+    </resultMap>
+
+    <select id="getRoleNameByUserId" resultType="java.lang.String">
+        SELECT
+        tr.roleName
+        FROM
+        t_role tr
+        WHERE
+        tr.tr_id = ( SELECT tr_id FROM t_user_role WHERE tu_id = #{tuId} );
+    </select>
+
+</mapper>
