@@ -19,7 +19,7 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain webFluxSecurityFilterChain(ServerHttpSecurity http) {
         return http.authorizeExchange()
-                .pathMatchers("/user/**").hasRole("ADMIN") //控制权限11
+                .pathMatchers("/user/**").hasRole("ADMIN") //控制权限
                 .pathMatchers("/order/**").hasRole("USER")
                 .pathMatchers("/product/**").hasRole("USER")
                 .pathMatchers("/**").permitAll()
